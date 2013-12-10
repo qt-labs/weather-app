@@ -1,0 +1,15 @@
+Makefile
+WeatherApp
+
+*.dll
+*.exe
+*.o
+*.so
+*.pro.user
+*.qrc
+*.wa
+*.settings
+
+moc_*.cpp
+qrc_*.cpp
+
