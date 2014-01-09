@@ -81,6 +81,17 @@ ApplicationWindow {
     StackView {
         id: pageView
         anchors.fill: parent
+        focus: true
+        Keys.onReleased: {
+            if ((event.key === Qt.Key_Back ||
+                  (event.key === Qt.Key_Left && (event.modifiers & Qt.AltModifier))) &&
+                    pageView.depth > 1) {
+                event.accepted = true
+                if (!currentItem.isLocked)
+                    currentItem.previousPage()
+            }
+        }
+
         initialItem: citiesPage
         delegate: StackViewDelegate {
             pushTransition: StackViewTransition {
