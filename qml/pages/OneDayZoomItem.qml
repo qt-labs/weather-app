@@ -130,7 +130,7 @@ GridLayout {
             Layout.columnSpan: 3
             TouchLabel {
                 id: rainLabel
-                text : qsTr("Rain: ") + Utils.getRain(root.slider.value, root.model)
+                text : qsTr("Precipitation: ") + Utils.getRain(root.slider.value, root.model)
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                 pixelSize: 30
             }
