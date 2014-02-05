@@ -228,7 +228,9 @@ bool CityModel::dataExpired(qint64 timeStamp) {
 void CityModel::replyFinished(QNetworkReply *reply)
 {
     if (reply->error() != QNetworkReply::NoError) {
-        setError(reply->errorString());
+        // "Silently" ignores failures while downloading images
+        if (!reply->request().url().toString().contains(".png"))
+            setError(reply->errorString());
     } else {
         QString requestUrl = reply->request().url().toString();
         if (requestUrl.endsWith(".xml")) {

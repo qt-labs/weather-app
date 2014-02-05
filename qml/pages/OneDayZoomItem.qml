@@ -113,8 +113,8 @@ GridLayout {
             }
 
             Layout.rowSpan: 1
-            Layout.preferredHeight: 200 * ApplicationInfo.ratio
-            Layout.preferredWidth: 200 * ApplicationInfo.ratio
+            Layout.preferredHeight: 160 * ApplicationInfo.ratio
+            Layout.preferredWidth: 160 * ApplicationInfo.ratio
             Layout.alignment: Qt.AlignCenter
         }
         TouchLabel {

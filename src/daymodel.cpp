@@ -112,15 +112,23 @@ void DayModel::addRow(QString day, QString weatherUrl, QString timeRange, QStrin
 QUrl DayModel::getCachedImageFile(const QString url)
 {
     bool isLargeImage = url.contains("b200");
-    QString filename = url.right(url.length() - url.lastIndexOf("/") - 1);
+    QString baseFilename = url.right(url.length() - url.lastIndexOf("/") - 1);
+    QString filename = baseFilename;
     if (isLargeImage)
         filename.prepend("large_");
     filename = QString("%1%2").arg(ApplicationPaths::dowloadedFilesPath()).arg(filename);
+    baseFilename = QString("%1%2").arg(ApplicationPaths::dowloadedFilesPath()).arg(baseFilename);;
     QFile file(filename);
-    if (file.exists())
+    if (file.exists()) {
         return QUrl(QString("image://weatherImages/%1").arg(filename));
-    else
-        return QUrl(url);
+    } else {
+        QFile standardSize(baseFilename);
+        // Some large icons are not available anymore on yr.no
+        if (isLargeImage && standardSize.exists())
+            return QUrl(QString("image://weatherImages/%1").arg(baseFilename));
+        else
+            return QUrl(url);
+    }
 }
 
 QString DayModel::getDayDetails(int index, QString prop) const
