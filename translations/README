@@ -1,0 +1,34 @@
+How To add translations to Quick Forecast
+==========================================
+
+The "translations" folder contains QuickForecast TS files.
+
+The available languages are found in the LANGUAGES line of weatherapp.pro.
+
+# Add a new language
+
+1 - Run "make ts-untranslated"
+2 - Rename QuickForecast_unstranslated.ts with the expected language
+3 - Add your language <lang> to the LANGUAGES line in weatherapp.pro
+    (don't qualify it with a country unless you expect country-specific variants)
+4 - Open QuickForecast_<lang>.ts in Qt Linguist, set the target language and translate
+
+# Update an existing language
+
+1 - Run "make ts-<lang> to update the specific <lang> TS file
+    (Alternatively run "make ts-all" to update TS files for all LANGUAGES)
+2 - Open QuickForecast_<lang>.ts in Qt Linguist and translate
+
+# Create a commit
+
+1 - Discard the modifications to any .ts files except yours
+2 - Run "make commit-ts" (To keep the changes smaller, the commit-ts target also
+    strips out the line number information from the TS files)
+3 - If needed, amend the commit with the modified weatherapp.pro file
+
+# QM files
+The QM files are automatically generated for the available TS files when running
+qmake on weatherapp.pro.
+
+For more info on how to use Qt Linguist and add support for translation in a Qt application, visit:
+https://qt-project.org/doc/qt-5/qtlinguist-index.html

@@ -10,6 +10,8 @@ WeatherApp
 *.wa
 *.settings
 
+*.qm
+
 moc_*.cpp
 qrc_*.cpp
 

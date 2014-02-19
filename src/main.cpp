@@ -95,6 +95,10 @@ int main(int argc, char *argv[])
     app.setOrganizationName("Digia");
     app.setApplicationName("QuickForecast");
 
+    QTranslator qtTranslator;
+    qtTranslator.load("QuickForecast_" + QLocale::system().name(), ":/translations/");
+    app.installTranslator(&qtTranslator);
+
 #ifndef Q_OS_IOS //QTBUG-34490
     QFontDatabase::addApplicationFont(":/weatherapp/fonts/OpenSans-Bold.ttf");
     QFontDatabase::addApplicationFont(":/weatherapp/fonts/OpenSans-Semibold.ttf");
