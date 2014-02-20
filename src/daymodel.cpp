@@ -54,12 +54,12 @@ DayModel::DayModel()
 
 QVariant DayModel::data(const QModelIndex &index, int role) const
 {
-    if (role == DayRole)
-        return m_data.at(index.row()).day;
+    if (role == FromRole)
+        return m_data.at(index.row()).from;
     if (role == WeatherUrlRole)
         return m_data.at(index.row()).weatherUrl;
-    if (role == TimeRangeRole)
-        return m_data.at(index.row()).timeRange;
+    if (role == ToRole)
+        return m_data.at(index.row()).to;
     if (role == TemperatureRole)
         return m_data.at(index.row()).temperature;
     if (role == WindSpeedRole)
@@ -74,9 +74,9 @@ QVariant DayModel::data(const QModelIndex &index, int role) const
 QHash<int, QByteArray> DayModel::roleNames() const
 {
     QHash<int, QByteArray> rn;
-    rn[DayRole]         = "day";
+    rn[FromRole]        = "from";
     rn[WeatherUrlRole]  = "weatherUrl";
-    rn[TimeRangeRole]   = "timeRange";
+    rn[ToRole]          = "to";
     rn[TemperatureRole] = "temperature";
     rn[WindSpeedRole]   = "windSpeed";
     rn[WindUrlRole]     = "windUrl";
@@ -91,15 +91,15 @@ void DayModel::clear()
     m_data.clear();
 }
 
-void DayModel::addRow(QString day, QString weatherUrl, QString timeRange, QString temperature, QString windSpeed, QString windUrl, QString rain) {
+void DayModel::addRow(QString weatherUrl, QString from, QString to, QString temperature, QString windSpeed, QString windUrl, QString rain) {
     QStringList m_images;
     DayModelStructure temp;
-    temp.day = day;
+    temp.from = from;
     temp.weatherUrl = weatherUrl;
     m_images.append(weatherUrl);
     QString largeWeatherIconUrl = weatherUrl;
     m_images.append(largeWeatherIconUrl.replace("b100", "b200"));
-    temp.timeRange = timeRange;
+    temp.to = to;
     temp.temperature = temperature;
     temp.windSpeed = windSpeed;
     temp.windUrl = windUrl;
@@ -137,12 +137,12 @@ QString DayModel::getDayDetails(int index, QString prop) const
         index = 0;
     if (index < m_data.count()) {
         DayModelStructure temp = m_data.at(index);
-        if (prop == "day")
-            return temp.day;
+        if (prop == "from")
+            return temp.from;
         if (prop == "weatherUrl")
             return temp.weatherUrl;
-        if (prop == "timeRange")
-            return temp.timeRange;
+        if (prop == "to")
+            return temp.to;
         if (prop == "temperature")
             return temp.temperature;
         if (prop == "windSpeed")

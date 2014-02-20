@@ -66,6 +66,7 @@ GridLayout {
             text : Utils.getDay(root.slider.value, root.model)
             font.weight: Font.Bold
             Layout.alignment: Qt.AlignBaseline
+            font.capitalization: Font.Capitalize
         }
         TouchLabel {
             text: Utils.getLongDate(root.model.date)

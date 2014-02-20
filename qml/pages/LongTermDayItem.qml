@@ -72,6 +72,7 @@ Rectangle {
             text: Utils.getDay(0, dayModel).substr(0, 3)
             font.weight: Font.DemiBold
             Layout.alignment: Qt.AlignBaseline
+            font.capitalization: Font.Capitalize
         }
         TouchLabel {
             Layout.preferredWidth: expectedTextWidth("00/00")

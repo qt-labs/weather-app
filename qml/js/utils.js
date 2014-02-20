@@ -39,6 +39,7 @@
 ****************************************************************************/
 
 .pragma library
+.import QtQml 2.2 as QtQml
 
 // LongTermPage utils
 
@@ -87,17 +88,17 @@ function isNegative(val)
 // OneDayPage utils
 
 function getFromTime(index, dayModel) {
-    var timerange = dayModel.getDayDetails(index, 'timeRange')
-    var pattern_time = /(.*) - .*/
-    var time = timerange.replace(pattern_time, "$1")
-    return time
+    var fromDate = dayModel.getDayDetails(index, 'from')
+    var fromTime = Qt.formatTime(new Date(fromDate), Qt.locale().timeFormat(QtQml.Locale.ShortFormat))
+    fromTime = fromTime.replace(/(:00) /, "") // save some space if display like 11:00 am
+    return fromTime
 }
 
 function getToTime(index, dayModel) {
-    var timerange = dayModel.getDayDetails(index, 'timeRange')
-    var pattern_time = /.* - (.*)/
-    var time = timerange.replace(pattern_time, "$1")
-    return time
+    var toDate = dayModel.getDayDetails(index, 'to')
+    var toTime = Qt.formatTime(new Date(toDate), Qt.locale().timeFormat(QtQml.Locale.ShortFormat))
+    toTime = toTime.replace(/(:00) /, "") // save some space if display like 11:00 am
+    return toTime
 }
 
 function getMaxMinTemp(dayModel) {
@@ -166,10 +167,7 @@ function updateDayModel(dayModel, item)
 {
     var windIconUrl = getWindSymbolUrl(item.windSpeed, item.windDirectionDeg)
     var weatherUrl = extractSymbolUrl(item.symbolcode)
-    var day = Qt.formatDate(new Date(dayModel.date), "dddd")
-    var timeRange = getTimeRange(item)
-
-    dayModel.addRow(day, weatherUrl, timeRange, item.temperature, item.windSpeed, windIconUrl, item.rain, item.period)
+    dayModel.addRow(weatherUrl, item.from, item.to, item.temperature, item.windSpeed, windIconUrl, item.rain, item.period)
 }
 
 function getItemDate(item)
@@ -178,14 +176,6 @@ function getItemDate(item)
     var toDateTime = parseDateTime(item.to)
     var date = (item.period === "0") ? toDateTime[0] : fromDateTime[0]
     return date
-}
-
-function getTimeRange(item)
-{
-    var fromDateTime = parseDateTime(item.from)
-    var toDateTime = parseDateTime(item.to)
-    var timeRange = fromDateTime[1] + " - " + toDateTime[1]
-    return timeRange
 }
 
 function parseDateTime(dt)
@@ -229,18 +219,24 @@ function extractSymbolUrl(code)
 
 function getDay(index, dayModel)
 {
-    var day = dayModel.getDayDetails(index, "day")
-    return day
+    var dayDate = new Date(dayModel.date)
+    return Qt.locale().dayName(dayDate.getDay())
 }
 
 function getShortDate(date)
 {
-    return date.substr(8, 2) + "." + date.substr(5, 2) // dd.MM
+    var d = new Date(date)
+    var formatWithYear = Qt.locale().dateFormat(QtQml.Locale.ShortFormat)
+    var formatWithoutYear = formatWithYear.replace(/[y]{1,4}/, "")
+    formatWithoutYear = formatWithoutYear.replace(/^\W/, "")
+    formatWithoutYear = formatWithoutYear.replace(/\W$/, "")
+    return Qt.formatDate(d, formatWithoutYear)
 }
 
 function getLongDate(date)
 {
-    return date.substr(8, 2) + "." + date.substr(5, 2) + "." + date.substr(0, 4) // dd.MM.yyyy
+    var d = new Date(date)
+    return Qt.formatDate(d, Qt.locale().dateFormat(QtQml.Locale.ShortFormat))
 }
 
 function getRain(index, dayModel)
