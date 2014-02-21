@@ -57,12 +57,13 @@ GridLayout {
     }
     Canvas {
         id: canvasSlider
+        property int sliderItemWidth : (model.periodCount() + 1) * canvasSlider.drawingOffset + ApplicationInfo.sliderHandleWidth
         Layout.alignment: Qt.AlignHCenter
 
         property int drawingOffset: ApplicationInfo.sliderGapWidth
         property var rangeTemp: Utils.getMaxMinTemp(model)
 
-        implicitWidth: touchSlider.width + 2 * drawingOffset
+        implicitWidth: sliderItemWidth
         implicitHeight: 3.8*drawingOffset
 
         property int marginsTemperaturesDrawing: calibrate(rangeTemp[1]) +  10 * ApplicationInfo.ratio
@@ -82,15 +83,13 @@ GridLayout {
             ctx.beginPath();
             ctx.fillStyle = ApplicationInfo.colors.doubleDarkGray
             ctx.lineWidth = 1
-            ctx.translate(touchSlider.x, marginsTemperaturesDrawing + weatherIconWidth + 15 * ApplicationInfo.ratio + circleIconWidth/2)
-            ctx.moveTo(drawingOffset/2, 0)
+            ctx.translate(canvasSlider.drawingOffset + ApplicationInfo.sliderHandleWidth/2, marginsTemperaturesDrawing + weatherIconWidth + 15 * ApplicationInfo.ratio + circleIconWidth/2)
             for (var i = 0; i < count; i++) {
-                ctx.moveTo((i + .5 )* drawingOffset, 0)
                 var temperatureStart = canvasSlider.calibrate(Utils.getTemperature(i, model))
                 var temperatureEnd = canvasSlider.calibrate(Utils.getTemperature(i + 1, model))
-                ctx.moveTo((i + 1 )* drawingOffset, -temperatureStart)
+                ctx.moveTo(i * drawingOffset, -temperatureStart)
                 if ( (i+1) < count)
-                    ctx.lineTo((i + 2) * drawingOffset, -temperatureEnd)
+                    ctx.lineTo((i + 1) * drawingOffset, -temperatureEnd)
             }
             ctx.stroke()
             ctx.closePath()
@@ -100,7 +99,8 @@ GridLayout {
             id: repeater
             model: root.model.periodCount()
             Column {
-                x: (index + 1.5) * ApplicationInfo.sliderGapWidth - canvasSlider.weatherIconWidth/2 - canvasSlider.circleIconWidth/2
+                width: canvasSlider.weatherIconWidth
+                x: (1 + index) * canvasSlider.drawingOffset - ApplicationInfo.sliderHandleWidth/2 + canvasSlider.weatherIconWidth/2 - canvasSlider.circleIconWidth/2
                 y: -canvasSlider.calibrate(temperature) + canvasSlider.marginsTemperaturesDrawing
                 property int temperature: Utils.getTemperature(index, root.model)
                 height: parent.height
@@ -138,22 +138,23 @@ GridLayout {
             id: column
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
+            width : canvasSlider.sliderItemWidth
             TouchSlider {
                 id: touchSlider
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                Layout.preferredWidth: (model.periodCount() - 1) * canvasSlider.drawingOffset + ApplicationInfo.sliderHandleWidth
+                Layout.preferredWidth: canvasSlider.sliderItemWidth - 2 * canvasSlider.drawingOffset
                 minimumValue: 0
                 maximumValue: model.periodCount() - 1
             }
             RowLayout {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                Layout.preferredWidth: model.periodCount() * canvasSlider.drawingOffset + ApplicationInfo.sliderHandleWidth
                 spacing: 0
-                Repeater {
+                Layout.preferredWidth: canvasSlider.sliderItemWidth - ApplicationInfo.sliderHandleWidth
+                  Repeater {
                     model: root.model.periodCount() + 1
                     TouchLabel {
-                        pixelSize: 24
-                        Layout.fillWidth: true
+                        pixelSize: 22
+                        Layout.preferredWidth: canvasSlider.drawingOffset
                         horizontalAlignment: Qt.AlignHCenter
                         Layout.alignment: Qt.AlignBaseline
                         text: (!!root.model && index !== root.model.periodCount()) ? Utils.getFromTime(index, root.model) : Utils.getToTime(index-1, root.model)
