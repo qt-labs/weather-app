@@ -95,7 +95,7 @@ BasicPage {
                 z: 1
                 anchors.centerIn: parent
                 visible: listview.count === 0
-                text: "No Cities"
+                text: qsTr("No Cities")
                 color: ApplicationInfo.colors.lightGray
             }
         }

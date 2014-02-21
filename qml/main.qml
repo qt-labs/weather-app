@@ -47,7 +47,7 @@ ApplicationWindow {
     id: root
     height: 700
     width: 1200
-    title: qsTr("Quick Forecast")
+    title: "Quick Forecast"
 
     property string statusBarMessage
 

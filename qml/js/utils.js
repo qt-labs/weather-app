@@ -76,7 +76,7 @@ function getMaxTemp(dayModel)
 
 function getTempFormat(temp)
 {
-    return temp + "°C"
+    return temp + qsTr("°C")
 }
 
 function isNegative(val)

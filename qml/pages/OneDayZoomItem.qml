@@ -120,7 +120,7 @@ GridLayout {
         TouchLabel {
             Layout.preferredWidth: expectedTextWidth(Utils.getMaxTempLenght(ApplicationInfo.currentCityModel))
             property int temp: Utils.getTemperature(root.slider.value, root.model)
-            text : temp + qsTr("°C")
+            text : Utils.getTempFormat(temp)
             color: temp < 0 ? ApplicationInfo.colors.blue : ApplicationInfo.colors.doubleDarkGray
             pixelSize: 72
             letterSpacing: -0.5
