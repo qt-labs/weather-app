@@ -144,7 +144,7 @@ GridLayout {
             Layout.columnSpan: 3
             TouchLabel {
                 id: windLabel
-                text : qsTr("Wind: ") + Utils.getWindSpeed(root.slider.value, root.model) + " "
+                text : qsTr("Wind: ") + Utils.getWindSpeed(root.slider.value, root.model)
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                 pixelSize: 30
             }

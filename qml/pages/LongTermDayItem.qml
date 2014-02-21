@@ -74,7 +74,7 @@ Rectangle {
             Layout.alignment: Qt.AlignBaseline
         }
         TouchLabel {
-            Layout.preferredWidth: expectedTextWidth("00.00")
+            Layout.preferredWidth: expectedTextWidth("00/00")
             text: Utils.getShortDate(dayModel.date)
             pixelSize: 20
             letterSpacing: -0.15
