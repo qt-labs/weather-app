@@ -83,12 +83,18 @@ ApplicationWindow {
         anchors.fill: parent
         focus: true
         Keys.onReleased: {
-            if ((event.key === Qt.Key_Back ||
-                  (event.key === Qt.Key_Left && (event.modifiers & Qt.AltModifier))) &&
-                    pageView.depth > 1) {
-                event.accepted = true
-                if (!currentItem.isLocked)
-                    currentItem.previousPage()
+            if (event.key === Qt.Key_Back ||
+                    (event.key === Qt.Key_Left && (event.modifiers & Qt.AltModifier))) {
+                if (pageView.depth > 1) {
+                    event.accepted = true
+                    if (!currentItem.isLocked)
+                        currentItem.previousPage()
+                } else {
+                    if (!currentItem.hasNoSearchText) {
+                        event.accepted = true
+                        currentItem.clearSearchBox()
+                    }
+                }
             }
         }
 
