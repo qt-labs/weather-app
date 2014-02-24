@@ -49,7 +49,7 @@ defineReplace(prependAll) {
 }
 
 # Supported languages
-LANGUAGES = de es fi
+LANGUAGES = de es fi it
 
 # Available translations
 TRANSLATIONS = $$prependAll(LANGUAGES, $$PWD/translations/QuickForecast_, .ts)
