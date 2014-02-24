@@ -47,7 +47,7 @@ BasicPage {
     id: page2
     title1: ApplicationInfo.currentCityModel.cityNameDisplay
     title2: ApplicationInfo.currentCityModel.countryName
-    title3: qsTr("10 Days Forecast")
+    title3: qsTr("10 Day Forecast")
 
     property bool cityLoaded: false
 
