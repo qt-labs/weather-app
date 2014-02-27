@@ -153,7 +153,8 @@ GridLayout {
                 pixelSize: 30
             }
             TouchLabel {
-                text : qsTr("mm")
+                //: The rain level unit, millimeters or inches
+                text: Utils.isMetricSystem() ? qsTr("mm") : qsTr("in")
                 pixelSize: 24
                 Layout.alignment: Qt.AlignBaseline | Qt.AlignLeft
             }
@@ -167,7 +168,8 @@ GridLayout {
                 pixelSize: 30
             }
             TouchLabel {
-                text : qsTr("m/s")
+                //: The wind speed unit, meters per second or miles per hour
+                text: Utils.isMetricSystem() ? qsTr("m/s") : qsTr("mph")
                 pixelSize: 24
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
             }

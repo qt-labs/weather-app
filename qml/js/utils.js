@@ -239,7 +239,8 @@ function getLongDate(date)
 
 function getRain(index, dayModel)
 {
-    return dayModel.getDayDetails(index, "rain")
+    var rain_mm = dayModel.getDayDetails(index, "rain")
+    return isMetricSystem() ? rain_mm : Math.round(3.93701 * rain_mm)/100 // convert to inches
 }
 
 function getTemperature(index, dayModel)
@@ -249,7 +250,8 @@ function getTemperature(index, dayModel)
 
 function getWindSpeed(index, dayModel)
 {
-    return dayModel.getDayDetails(index, "windSpeed")
+    var speed_ms = dayModel.getDayDetails(index, "windSpeed")
+    return isMetricSystem() ? speed_ms : Math.round(speed_ms * 223.694)/100 // convert to mph
 }
 
 function getWindUrl(index, dayModel)
@@ -266,4 +268,9 @@ function getWeatherUrl(index, dayModel, size)
     else
         smallUrl = smallUrl
     return dayModel.getCachedImageFile(smallUrl)
+}
+
+function isMetricSystem()
+{
+    return Qt.locale().measurementSystem === QtQml.Locale.MetricSystem
 }

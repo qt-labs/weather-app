@@ -122,7 +122,8 @@ ObjectModel {
         Layout.alignment: Qt.AlignBaseline
     }
     TouchLabel {
-        text: qsTr("m/s")
+        //: The wind speed unit, meters per second or miles per hour
+        text: Utils.isMetricSystem() ? qsTr("m/s") : qsTr("mph")
         pixelSize: 18
         Layout.alignment: Qt.AlignBaseline
     }
