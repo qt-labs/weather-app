@@ -69,7 +69,8 @@ Rectangle {
         TouchLabel {
             id: shortDay
             Layout.preferredWidth: expectedTextWidth("Wed.")
-            text: Utils.getDay(0, dayModel).substr(0, 3)
+            property bool useShortFormat: true
+            text: Utils.getDay(0, dayModel, useShortFormat)
             font.weight: Font.DemiBold
             Layout.alignment: Qt.AlignBaseline
             font.capitalization: Font.Capitalize

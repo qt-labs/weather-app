@@ -217,10 +217,12 @@ function extractSymbolUrl(code)
 
 // Global
 
-function getDay(index, dayModel)
+function getDay(index, dayModel, isShort)
 {
+    if (isShort === undefined)
+        isShort = false
     var dayDate = new Date(dayModel.date)
-    return Qt.locale().dayName(dayDate.getDay())
+    return Qt.locale().dayName(dayDate.getDay(), isShort ? QtQml.Locale.ShortFormat : QtQml.Locale.LongFormat )
 }
 
 function getShortDate(date)
