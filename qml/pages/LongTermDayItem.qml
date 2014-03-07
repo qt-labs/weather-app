@@ -68,7 +68,7 @@ Rectangle {
         Separator {}
         TouchLabel {
             id: shortDay
-            Layout.preferredWidth: expectedTextWidth("Wed.")
+            Layout.preferredWidth: expectedTextWidth(Utils.getLongestShortDayName()) + 20 * ApplicationInfo.ratio
             property bool useShortFormat: true
             text: Utils.getDay(0, dayModel, useShortFormat)
             font.weight: Font.DemiBold
@@ -76,7 +76,7 @@ Rectangle {
             font.capitalization: Font.Capitalize
         }
         TouchLabel {
-            Layout.preferredWidth: expectedTextWidth("00/00")
+            Layout.preferredWidth: expectedTextWidth(Utils.getTodayShortDate()) + 4 * ApplicationInfo.ratio
             text: Utils.getShortDate(dayModel.date)
             pixelSize: 20
             letterSpacing: -0.15
