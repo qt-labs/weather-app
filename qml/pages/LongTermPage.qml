@@ -61,16 +61,45 @@ BasicPage {
             anchors.fill: parent
             flickableItem.interactive: true
             flickableItem.flickableDirection: Flickable.VerticalFlick
-            ColumnLayout {
-                id: layout
-                spacing: 0
+            Item {
+                id: item
+                width: scrollview.width
+                height: grid.implicitHeight
+                property int rowHeight: 118 * ApplicationInfo.ratio
                 Repeater {
-                    id: repeat
                     model: cityLoaded ? ApplicationInfo.currentCityModel.daysCount() : null
-                    LongTermDayItem {
-                        Layout.fillWidth: true
-                        last: index === repeat.count
-                        onNext: nextPage()
+                    Rectangle {
+                        color: mouse.pressed ? ApplicationInfo.colors.smokeGray : ApplicationInfo.colors.white
+                        width: scrollview.width
+                        height: item.rowHeight + 1
+                        y: (item.rowHeight + 1) * index
+                        MouseArea {
+                            id: mouse
+                            anchors.fill: parent
+                            onClicked: {
+                                ApplicationInfo.currentIndexDay = index
+                                nextPage()
+                            }
+                        }
+                    }
+                }
+                GridLayout {
+                    id: grid
+                    width: scrollview.width
+                    flow: GridLayout.LeftToRight
+                    rowSpacing: 0
+                    columnSpacing: 5 * ApplicationInfo.ratio
+                    columns: r1.count && !!r1.itemAt(0) ? r1.itemAt(0).count - 1 : 0
+                    Repeater {
+                        id: r1
+                        model: cityLoaded ? ApplicationInfo.currentCityModel.daysCount() : null
+                        Repeater {
+                            model: LongTermDayItem {id: longday}
+                            property int dayIndex: r1.model !== null ? index : 0
+                            property int last: dayIndex === r1.count
+                            property var dayModel: ApplicationInfo.currentCityModel.getDayModel(dayIndex)
+                            property int rowHeight: item.rowHeight
+                        }
                     }
                 }
             }

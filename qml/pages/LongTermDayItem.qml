@@ -42,116 +42,92 @@ import QtQuick 2.1
 import QtQuick.Layouts 1.0
 import "../js/utils.js" as Utils
 import org.qtproject.demo.weather 1.0
+import QtQml.Models 2.1
 
-Rectangle {
-    id: day
-    Layout.preferredHeight: 118 * ApplicationInfo.ratio
-    Layout.preferredWidth: scrollview.viewport.width - 5
-
-    signal next
-    property bool last
-    property var dayModel: ApplicationInfo.currentCityModel.getDayModel(index)
-
-    color: mouse.pressed ? ApplicationInfo.colors.smokeGray : ApplicationInfo.colors.white
-
-    MouseArea {
-        id: mouse
-        anchors.fill: parent
-        onClicked: {
-            ApplicationInfo.currentIndexDay = index
-            next()
-        }
+ObjectModel {
+    Separator {}
+    TouchLabel {
+        id: shortDay
+        property bool useShortFormat: true
+        text: Utils.getDay(0, dayModel, useShortFormat)
+        font.weight: Font.DemiBold
+        Layout.alignment: Qt.AlignBaseline
+        font.capitalization: Font.Capitalize
     }
-    RowLayout {
-        anchors.fill: parent
-        spacing: 0
-        Separator {}
-        TouchLabel {
-            id: shortDay
-            Layout.preferredWidth: expectedTextWidth(Utils.getLongestShortDayName()) + 20 * ApplicationInfo.ratio
-            property bool useShortFormat: true
-            text: Utils.getDay(0, dayModel, useShortFormat)
-            font.weight: Font.DemiBold
-            Layout.alignment: Qt.AlignBaseline
-            font.capitalization: Font.Capitalize
-        }
-        TouchLabel {
-            Layout.preferredWidth: expectedTextWidth(Utils.getTodayShortDate()) + 4 * ApplicationInfo.ratio
-            text: Utils.getShortDate(dayModel.date)
-            pixelSize: 20
-            letterSpacing: -0.15
-            Layout.alignment: Qt.AlignBaseline
-        }
-        Separator {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            Layout.minimumHeight: 5
-            Layout.minimumWidth: 5
-        }
-        Image {
-            source: Utils.getWeatherUrl(dayModel.afternoonIndex, dayModel)
-            property int weatherIconSize: 80 * ApplicationInfo.ratio
-            Layout.preferredHeight: weatherIconSize
-            Layout.preferredWidth: weatherIconSize
-            onStatusChanged: if (status === Image.Error) updateStatusBar(ApplicationInfo.constants.errorLoadingImage + ": " + source)
-        }
-        Separator {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            Layout.minimumHeight: 5
-            Layout.minimumWidth: 5
-        }
-        TouchLabel {
-            Layout.preferredWidth: expectedTextWidth(Utils.getMaxTempLenght(ApplicationInfo.currentCityModel))
-            property string temp: Utils.getMinTemp(dayModel)
-            text: Utils.getTempFormat(temp)
-            color: temp < 0 ? ApplicationInfo.colors.blue : ApplicationInfo.colors.doubleDarkGray
-            Layout.alignment: Qt.AlignBaseline
-        }
-        Rectangle {
-            id: separator2
-            Layout.preferredWidth: 1
-            Layout.preferredHeight: day.height/5
-            color: ApplicationInfo.colors.lightGray
-        }
-        TouchLabel {
-            Layout.preferredWidth: expectedTextWidth(Utils.getMaxTempLenght(ApplicationInfo.currentCityModel))
-            property int temp: Utils.getMaxTemp(dayModel)
-            text: Utils.getTempFormat(temp)
-            horizontalAlignment: Qt.AlignRight
-            color: temp < 0 ? ApplicationInfo.colors.blue : ApplicationInfo.colors.doubleDarkGray
-            Layout.alignment: Qt.AlignBaseline
-        }
-        Separator {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            Layout.minimumHeight: 5
-            Layout.minimumWidth: 5
-        }
-        Image {
-            property int windIconSize: 32 * ApplicationInfo.ratio
-            source: Utils.getWindUrl(dayModel.afternoonIndex, dayModel)
-            Layout.preferredHeight: windIconSize
-            Layout.preferredWidth: windIconSize
-            onStatusChanged: if (status === Image.Error) updateStatusBar(ApplicationInfo.constants.errorLoadingImage + ": " + source)
-        }
-        TouchLabel {
-            Layout.preferredWidth: expectedTextWidth("10.0")
-            text: Utils.getWindSpeed(dayModel.afternoonIndex, dayModel)
-            pixelSize: 24
-            Layout.alignment: Qt.AlignBaseline
-        }
-        TouchLabel {
-            text: qsTr("m/s")
-            pixelSize: 18
-            Layout.alignment: Qt.AlignBaseline
-        }
-        Separator {}
+    TouchLabel {
+        text: Utils.getShortDate(dayModel.date)
+        pixelSize: 20
+        letterSpacing: -0.15
+        Layout.alignment: Qt.AlignBaseline
+    }
+    Separator {
+        Layout.preferredHeight: rowHeight // sets the row height
+        Layout.fillWidth: true
+        Layout.minimumHeight: 5
+        Layout.minimumWidth: 5
+    }
+    Image {
+        source: Utils.getWeatherUrl(dayModel.afternoonIndex, dayModel)
+        property int weatherIconSize: 80 * ApplicationInfo.ratio
+        Layout.preferredHeight: weatherIconSize
+        Layout.preferredWidth: weatherIconSize
+        onStatusChanged: if (status === Image.Error) updateStatusBar(ApplicationInfo.constants.errorLoadingImage + ": " + source)
+    }
+    Separator {
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+        Layout.minimumHeight: 5
+        Layout.minimumWidth: 5
+    }
+    TouchLabel {
+        property string temp: Utils.getMinTemp(dayModel)
+        text: Utils.getTempFormat(temp)
+        color: temp < 0 ? ApplicationInfo.colors.blue : ApplicationInfo.colors.doubleDarkGray
+        Layout.alignment: Qt.AlignBaseline
     }
     Rectangle {
-        width: parent.width
-        height: 1
+        id: separator2
+        Layout.preferredWidth: 1
+        Layout.preferredHeight: rowHeight / 5
+        color: ApplicationInfo.colors.lightGray
+    }
+    TouchLabel {
+        property int temp: Utils.getMaxTemp(dayModel)
+        text: Utils.getTempFormat(temp)
+        horizontalAlignment: Qt.AlignRight
+        color: temp < 0 ? ApplicationInfo.colors.blue : ApplicationInfo.colors.doubleDarkGray
+        Layout.alignment: Qt.AlignBaseline
+    }
+    Separator {
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+        Layout.minimumHeight: 5
+        Layout.minimumWidth: 5
+    }
+    Image {
+        property int windIconSize: 32 * ApplicationInfo.ratio
+        source: Utils.getWindUrl(dayModel.afternoonIndex, dayModel)
+        Layout.preferredHeight: windIconSize
+        Layout.preferredWidth: windIconSize
+        onStatusChanged: if (status === Image.Error) updateStatusBar(ApplicationInfo.constants.errorLoadingImage + ": " + source)
+    }
+    TouchLabel {
+        text: Utils.getWindSpeed(dayModel.afternoonIndex, dayModel)
+        pixelSize: 24
+        Layout.alignment: Qt.AlignBaseline
+    }
+    TouchLabel {
+        text: qsTr("m/s")
+        pixelSize: 18
+        Layout.alignment: Qt.AlignBaseline
+    }
+    Separator {}
+    Rectangle {
+        width:1
+        Layout.fillWidth: true
+        Layout.preferredHeight: 1
         visible: !last
         color: ApplicationInfo.colors.paleGray
+        Layout.columnSpan: 14
     }
 }
