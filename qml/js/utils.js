@@ -126,7 +126,7 @@ function getMaxTempLenght(cityModel) {
     var stringTemp = "555" // temperatures estimated between -55 and +55
     if (maxLength === 3)
         stringTemp = "-" + stringTemp
-    return stringTemp.substring(0, maxLength) + "°C."
+    return stringTemp.substring(0, maxLength)
 }
 
 // WeatherModel utils

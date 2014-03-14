@@ -119,7 +119,8 @@ GridLayout {
             Layout.alignment: Qt.AlignCenter
         }
         TouchLabel {
-            Layout.preferredWidth: expectedTextWidth(Utils.getMaxTempLenght(ApplicationInfo.currentCityModel))
+            Layout.preferredWidth: expectedTextWidth(Utils.getTempFormat(Utils.getMaxTempLenght(ApplicationInfo.currentCityModel)))
+                                   + 4 * ApplicationInfo.ratio
             property int temp: Utils.getTemperature(root.slider.value, root.model)
             text : Utils.getTempFormat(temp)
             color: temp < 0 ? ApplicationInfo.colors.blue : ApplicationInfo.colors.doubleDarkGray
