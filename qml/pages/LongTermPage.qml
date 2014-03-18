@@ -64,9 +64,10 @@ BasicPage {
             Item {
                 id: item
                 width: scrollview.width
-                height: grid.implicitHeight
-                property int rowHeight: 118 * ApplicationInfo.ratio
+                implicitHeight: grid.implicitHeight
+                property int rowHeight: 118 * ApplicationInfo.ratio + 1
                 Repeater {
+                    id: repeater
                     model: cityLoaded ? ApplicationInfo.currentCityModel.daysCount() : null
                     Rectangle {
                         color: mouse.pressed ? ApplicationInfo.colors.smokeGray : ApplicationInfo.colors.white
@@ -81,15 +82,25 @@ BasicPage {
                                 nextPage()
                             }
                         }
+                        Rectangle {
+                            width: parent.width
+                            height: 1
+                            anchors.bottom: parent.bottom
+                            visible: index != (repeater.count - 1)
+                            color: ApplicationInfo.colors.paleGray
+                        }
                     }
                 }
                 GridLayout {
                     id: grid
-                    width: scrollview.width
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.leftMargin: ApplicationInfo.hMargin
+                    anchors.rightMargin: ApplicationInfo.hMargin
                     flow: GridLayout.LeftToRight
                     rowSpacing: 0
-                    columnSpacing: 5 * ApplicationInfo.ratio
-                    columns: r1.count && !!r1.itemAt(0) ? r1.itemAt(0).count - 1 : 0
+                    columnSpacing: 6 * ApplicationInfo.ratio
+                    columns: r1.count && !!r1.itemAt(0) ? r1.itemAt(0).count : 0
                     Repeater {
                         id: r1
                         model: cityLoaded ? ApplicationInfo.currentCityModel.daysCount() : null

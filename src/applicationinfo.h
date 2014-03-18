@@ -57,6 +57,7 @@ class ApplicationInfo : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int applicationWidth READ applicationWidth WRITE setApplicationWidth NOTIFY applicationWidthChanged)
+    Q_PROPERTY(bool isMobile READ isMobile CONSTANT)
     Q_PROPERTY(QObject *colors READ colors CONSTANT)
     Q_PROPERTY(QObject *constants READ constants CONSTANT)
     Q_PROPERTY(bool isPortraitMode READ isPortraitMode WRITE setIsPortraitMode NOTIFY portraitModeChanged)
@@ -72,6 +73,7 @@ class ApplicationInfo : public QObject
 public:
     ApplicationInfo(WeatherImageProvider *provider);
 
+    bool isMobile() const { return m_isMobile; }
     QQmlPropertyMap *colors() const { return m_colors; }
     QQmlPropertyMap *constants() const { return m_constants; }
 
@@ -99,7 +101,7 @@ public:
     Q_INVOKABLE void queryCities(const QString input);
 
 protected slots:
-    void notifyPortraitMode();
+    void notifyPortraitMode(Qt::ScreenOrientation);
 
 private slots:
     void replyFinished(QNetworkReply *reply);

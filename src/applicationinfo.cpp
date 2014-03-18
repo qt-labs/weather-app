@@ -92,7 +92,7 @@ ApplicationInfo::ApplicationInfo(WeatherImageProvider *provider)
     m_currentIndexDay = -1;
 
     if (m_isMobile)
-        connect(qApp->primaryScreen(), SIGNAL(physicalSizeChanged(QSizeF)), this, SLOT(notifyPortraitMode()));
+        connect(qApp->primaryScreen(), SIGNAL(primaryOrientationChanged(Qt::ScreenOrientation)), this, SLOT(notifyPortraitMode(Qt::ScreenOrientation)));
 
     // Search in English
     // In order to use yr.no weather data service, refer to their terms
@@ -135,11 +135,18 @@ QString ApplicationInfo::getImagePath(const QString image)
     return QString("qrc:/weatherapp/qml/touch/images/%1").arg(image);
 }
 
-void ApplicationInfo::notifyPortraitMode()
+void ApplicationInfo::notifyPortraitMode(Qt::ScreenOrientation orientation)
 {
-    int width = qApp->primaryScreen()->geometry().width();
-    int height = qApp->primaryScreen()->geometry().height();
-    setIsPortraitMode(height > width);
+    switch (orientation) {
+    case Qt::LandscapeOrientation:
+    case Qt::InvertedLandscapeOrientation:
+        setIsPortraitMode(false);
+        break;
+    case Qt::PortraitOrientation:
+    case Qt::InvertedPortraitOrientation:
+        setIsPortraitMode(true);
+        break;
+    }
 }
 
 void ApplicationInfo::setIsPortraitMode(const bool newMode)

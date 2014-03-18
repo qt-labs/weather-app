@@ -45,7 +45,6 @@ import org.qtproject.demo.weather 1.0
 import QtQml.Models 2.1
 
 ObjectModel {
-    Separator {}
     TouchLabel {
         id: shortDay
         property bool useShortFormat: true
@@ -61,6 +60,8 @@ ObjectModel {
         Layout.alignment: Qt.AlignBaseline
     }
     Separator {
+        implicitWidth: 30
+        implicitHeight: rowHeight
         Layout.preferredHeight: rowHeight // sets the row height
         Layout.fillWidth: true
         Layout.minimumHeight: 5
@@ -74,6 +75,8 @@ ObjectModel {
         onStatusChanged: if (status === Image.Error) updateStatusBar(ApplicationInfo.constants.errorLoadingImage + ": " + source)
     }
     Separator {
+        implicitWidth: 30
+        implicitHeight: 30
         Layout.fillHeight: true
         Layout.fillWidth: true
         Layout.minimumHeight: 5
@@ -99,6 +102,8 @@ ObjectModel {
         Layout.alignment: Qt.AlignBaseline
     }
     Separator {
+        implicitWidth: 30
+        implicitHeight: 30
         Layout.fillHeight: true
         Layout.fillWidth: true
         Layout.minimumHeight: 5
@@ -120,14 +125,5 @@ ObjectModel {
         text: qsTr("m/s")
         pixelSize: 18
         Layout.alignment: Qt.AlignBaseline
-    }
-    Separator {}
-    Rectangle {
-        width:1
-        Layout.fillWidth: true
-        Layout.preferredHeight: 1
-        visible: !last
-        color: ApplicationInfo.colors.paleGray
-        Layout.columnSpan: 14
     }
 }
