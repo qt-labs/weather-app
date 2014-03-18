@@ -271,23 +271,3 @@ function getWeatherUrl(index, dayModel, size)
         smallUrl = smallUrl
     return dayModel.getCachedImageFile(smallUrl)
 }
-
-function getLongestShortDayName()
-{
-    // Used to get the maximum short day length
-    var longestDayName = ""
-    for (var day = 0; day < 6; day++) {
-        var temp = Qt.locale().dayName(day, QtQml.Locale.ShortFormat)
-        if (temp.toString().length > longestDayName.toString().length)
-            longestDayName = temp
-    }
-    return longestDayName
-}
-
-function getTodayShortDate()
-{
-    // Used to get the short date format length
-    var currentDate = new Date()
-    return getShortDate(currentDate)
-}
-

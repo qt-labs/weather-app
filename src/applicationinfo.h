@@ -64,11 +64,11 @@ class ApplicationInfo : public QObject
     Q_PROPERTY(int currentIndexDay READ currentIndexDay WRITE setCurrentIndexDay NOTIFY currentIndexDayChanged)
     Q_PROPERTY(CityModel *currentCityModel READ currentCityModel WRITE setCurrentCityModel NOTIFY currentCityModelChanged)
     Q_PROPERTY(CitiesListModel *foundCities READ foundCities NOTIFY foundCitiesChanged)
-    Q_PROPERTY(qreal ratio READ ratio NOTIFY ratioChanged)
+    Q_PROPERTY(qreal ratio READ ratio CONSTANT)
     Q_PROPERTY(qreal hMargin READ hMargin NOTIFY hMarginChanged)
-    Q_PROPERTY(qreal sliderHandleWidth READ sliderHandleWidth NOTIFY ratioChanged)
-    Q_PROPERTY(qreal sliderHandleHeight READ sliderHandleHeight NOTIFY ratioChanged)
-    Q_PROPERTY(qreal sliderGapWidth READ sliderGapWidth NOTIFY ratioChanged)
+    Q_PROPERTY(qreal sliderHandleWidth READ sliderHandleWidth CONSTANT)
+    Q_PROPERTY(qreal sliderHandleHeight READ sliderHandleHeight CONSTANT)
+    Q_PROPERTY(qreal sliderGapWidth READ sliderGapWidth CONSTANT)
 
 public:
     ApplicationInfo(WeatherImageProvider *provider);
@@ -116,7 +116,6 @@ signals:
     void currentCityModelChanged();
     void currentIndexDayChanged();
     void foundCitiesChanged();
-    void ratioChanged();
     void waitForCitiesQueryReply(const QString message);
     void errorOnQueryCities(const QString errorMessage);
 

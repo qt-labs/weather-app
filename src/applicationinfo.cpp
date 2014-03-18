@@ -146,6 +146,8 @@ void ApplicationInfo::notifyPortraitMode(Qt::ScreenOrientation orientation)
     case Qt::InvertedPortraitOrientation:
         setIsPortraitMode(true);
         break;
+    default:
+        break;
     }
 }
 
