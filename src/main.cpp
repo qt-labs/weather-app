@@ -113,6 +113,7 @@ int main(int argc, char *argv[])
 #endif
 
     const char *uri = "org.qtproject.demo.weather";
+    // @uri org.qtproject.demo.weather
     qmlRegisterType<DayModel>(uri, 1, 0, "DayModel");
     qmlRegisterType<CityModel>(uri, 1, 0, "CityModel");
     qmlRegisterType<Cities>(uri, 1, 0, "Cities");
