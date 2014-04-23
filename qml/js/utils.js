@@ -85,18 +85,28 @@ function isNegative(val)
     return val < 0
 }
 
+function toOriginalDateTime(val)
+{
+    var tzo = (new Date().getTimezoneOffset())/60
+    var dat = new Date(val)
+    dat.setHours(dat.getHours() + tzo)
+    return dat
+}
+
 // OneDayPage utils
 
 function getFromTime(index, dayModel) {
     var fromDate = dayModel.getDayDetails(index, 'from')
-    var fromTime = Qt.formatTime(new Date(fromDate), Qt.locale().timeFormat(QtQml.Locale.ShortFormat))
+    fromDate = toOriginalDateTime(fromDate)
+    var fromTime = Qt.formatTime(fromDate, Qt.locale().timeFormat(QtQml.Locale.ShortFormat))
     fromTime = fromTime.replace(/(:00) /, "") // save some space if display like 11:00 am
     return fromTime
 }
 
 function getToTime(index, dayModel) {
     var toDate = dayModel.getDayDetails(index, 'to')
-    var toTime = Qt.formatTime(new Date(toDate), Qt.locale().timeFormat(QtQml.Locale.ShortFormat))
+    toDate = toOriginalDateTime(toDate)
+    var toTime = Qt.formatTime(toDate, Qt.locale().timeFormat(QtQml.Locale.ShortFormat))
     toTime = toTime.replace(/(:00) /, "") // save some space if display like 11:00 am
     return toTime
 }
@@ -221,13 +231,13 @@ function getDay(index, dayModel, isShort)
 {
     if (isShort === undefined)
         isShort = false
-    var dayDate = new Date(dayModel.date)
+    var dayDate = toOriginalDateTime(dayModel.date)
     return Qt.locale().dayName(dayDate.getDay(), isShort ? QtQml.Locale.ShortFormat : QtQml.Locale.LongFormat )
 }
 
 function getShortDate(date)
 {
-    var d = new Date(date)
+    var d = toOriginalDateTime(date)
     var formatWithYear = Qt.locale().dateFormat(QtQml.Locale.ShortFormat)
     var formatWithoutYear = formatWithYear.replace(/[y]{1,4}/, "")
     formatWithoutYear = formatWithoutYear.replace(/^\W/, "")
@@ -237,7 +247,7 @@ function getShortDate(date)
 
 function getLongDate(date)
 {
-    var d = new Date(date)
+    var d = toOriginalDateTime(date)
     return Qt.formatDate(d, Qt.locale().dateFormat(QtQml.Locale.ShortFormat))
 }
 
