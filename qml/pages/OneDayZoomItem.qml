@@ -52,6 +52,8 @@ GridLayout {
     property bool singleItem
     property string singleTimeString: "(" + Utils.getFromTime(0, dayModel) + " - " + Utils.getToTime(0, dayModel) + ")"
 
+    readonly property int sliderValue: Math.round(root.slider.value)
+
     Separator {
         Layout.fillHeight: true
         Layout.fillWidth: ApplicationInfo.isPortraitMode ? true : false
@@ -63,7 +65,7 @@ GridLayout {
         columns: 3
         TouchLabel {
             id: longDay
-            text : Utils.getDay(root.slider.value, root.model)
+            text : Utils.getDay(root.sliderValue, root.model)
             font.weight: Font.Bold
             Layout.alignment: Qt.AlignBaseline
             font.capitalization: Font.Capitalize
@@ -84,7 +86,7 @@ GridLayout {
         Item {
             Image {
                 id: mainIcon
-                source: Utils.getWeatherUrl(Math.round(root.slider.value), root.model, "large")
+                source: Utils.getWeatherUrl(root.sliderValue, root.model, "large")
                 onStatusChanged: if (status === Image.Error) updateStatusBar(ApplicationInfo.constants.errorLoadingImage + ": " + source)
                 anchors.centerIn: parent
                 width: parent.width
@@ -121,7 +123,7 @@ GridLayout {
         TouchLabel {
             Layout.preferredWidth: expectedTextWidth(Utils.getTempFormat(Utils.getMaxTempLenght(ApplicationInfo.currentCityModel)))
                                    + 4 * ApplicationInfo.ratio
-            property int temp: Utils.getTemperature(root.slider.value, root.model)
+            property int temp: Utils.getTemperature(root.sliderValue, root.model)
             text : Utils.getTempFormat(temp)
             color: temp < 0 ? ApplicationInfo.colors.blue : ApplicationInfo.colors.doubleDarkGray
             pixelSize: 72
@@ -132,7 +134,7 @@ GridLayout {
             Layout.columnSpan: 3
             TouchLabel {
                 id: rainLabel
-                text : qsTr("Precipitation: ") + Utils.getRain(root.slider.value, root.model)
+                text : qsTr("Precipitation: ") + Utils.getRain(root.sliderValue, root.model)
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                 pixelSize: 30
             }
@@ -146,7 +148,7 @@ GridLayout {
             Layout.columnSpan: 3
             TouchLabel {
                 id: windLabel
-                text : qsTr("Wind: ") + Utils.getWindSpeed(root.slider.value, root.model)
+                text : qsTr("Wind: ") + Utils.getWindSpeed(root.sliderValue, root.model)
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                 pixelSize: 30
             }
@@ -156,7 +158,7 @@ GridLayout {
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
             }
             Image {
-                source: Utils.getWindUrl(root.slider.value, root.model)
+                source: Utils.getWindUrl(root.sliderValue, root.model)
                 property int windIconSize: 45 * ApplicationInfo.ratio
                 Layout.preferredHeight: windIconSize
                 Layout.preferredWidth: windIconSize
