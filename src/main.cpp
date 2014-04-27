@@ -39,11 +39,12 @@
 ****************************************************************************/
 
 #include <QtCore/QString>
+#include <QtCore/QTranslator>
 #include <QtGui/QFont>
 #include <QtGui/QFontDatabase>
 #include <QtGui/QGuiApplication>
 #include <QtQuick/QQuickWindow>
-#include <QtQml>
+#include <QtQml/QQmlApplicationEngine>
 
 #include "daymodel.h"
 #include "citymodel.h"
