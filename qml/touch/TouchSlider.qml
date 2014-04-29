@@ -50,7 +50,7 @@ Slider {
         groove: Rectangle {
             Rectangle {
                 id: beforeHandle
-                width: control.value * ApplicationInfo.sliderGapWidth + ApplicationInfo.sliderHandleWidth/2
+                width: styleData.handlePosition
                 height: 20 * ApplicationInfo.ratio
                 color: ApplicationInfo.colors.blue
                 radius: 90

@@ -54,17 +54,15 @@ GridLayout {
         Layout.fillHeight: true
         Layout.fillWidth: ApplicationInfo.isPortraitMode ? true : false
         Layout.minimumHeight: 10
+        Layout.minimumWidth: 0
     }
     Canvas {
         id: canvasSlider
-        property int sliderItemWidth : (model.periodCount() + 1) * canvasSlider.drawingOffset + ApplicationInfo.sliderHandleWidth
-        Layout.alignment: Qt.AlignHCenter
-
-        property int drawingOffset: ApplicationInfo.sliderGapWidth
+        property int sliderItemWidth : (model.periodCount() + 1) * ApplicationInfo.sliderGapWidth
         property var rangeTemp: Utils.getMaxMinTemp(model)
 
         implicitWidth: sliderItemWidth
-        implicitHeight: 3.8*drawingOffset
+        implicitHeight: rowTemp.implicitHeight + column.implicitHeight
 
         property int marginsTemperaturesDrawing: calibrate(rangeTemp[1]) +  10 * ApplicationInfo.ratio
         property real circleIconWidth: 20 * ApplicationInfo.ratio
@@ -79,94 +77,107 @@ GridLayout {
         onPaint: {
             var ctx = getContext('2d')
             var count = model.periodCount()
+            if (count <= 0)
+                return
             ctx.save()
             ctx.beginPath();
             ctx.fillStyle = ApplicationInfo.colors.doubleDarkGray
             ctx.lineWidth = 1
-            ctx.translate(canvasSlider.drawingOffset + ApplicationInfo.sliderHandleWidth/2, marginsTemperaturesDrawing + weatherIconWidth + 15 * ApplicationInfo.ratio + circleIconWidth/2)
-            for (var i = 0; i < count; i++) {
-                var temperatureStart = canvasSlider.calibrate(Utils.getTemperature(i, model))
-                var temperatureEnd = canvasSlider.calibrate(Utils.getTemperature(i + 1, model))
-                ctx.moveTo(i * drawingOffset, -temperatureStart)
-                if ( (i+1) < count)
-                    ctx.lineTo((i + 1) * drawingOffset, -temperatureEnd)
+
+            var yOffset = canvasSlider.weatherIconWidth
+            var item = repeater.itemAt(0).children[3]
+            var pos = item.mapToItem(canvasSlider)
+            ctx.moveTo(item.width/2 + pos.x, item.height/2 + pos.y)
+
+            for (var i = 1; i < count; i++) {
+                item = repeater.itemAt(i).children[3]
+                pos = item.mapToItem(canvasSlider)
+                ctx.lineTo(item.width/2 + pos.x, item.height/2 + pos.y)
             }
             ctx.stroke()
             ctx.closePath()
             ctx.restore();
         }
-        Repeater {
-            id: repeater
-            model: root.model.periodCount()
-            Column {
-                width: canvasSlider.weatherIconWidth
-                x: (1 + index) * canvasSlider.drawingOffset - ApplicationInfo.sliderHandleWidth/2 + canvasSlider.weatherIconWidth/2 - canvasSlider.circleIconWidth/2
-                y: -canvasSlider.calibrate(temperature) + canvasSlider.marginsTemperaturesDrawing
-                property int temperature: Utils.getTemperature(index, root.model)
-                height: parent.height
-                id: col
-                Image {
-                    source: Utils.getWeatherUrl(index, root.model)
-                    width: canvasSlider.weatherIconWidth
-                    height: width
-                    anchors.horizontalCenter: col.horizontalCenter
-                }
-                Item {
-                    height: 15 * ApplicationInfo.ratio
-                    width: height
-                }
-                Image {
-                    id: circle
-                    source: ApplicationInfo.getImagePath("Circle.png")
-                    width: canvasSlider.circleIconWidth
-                    height: width
-                    anchors.horizontalCenter: col.horizontalCenter
-                }
-                Item {
-                    height: 15 * ApplicationInfo.ratio
-                    width: height
-                }
-                TouchLabel {
-                    text: Utils.getTempFormat(temperature)
-                    pixelSize: 24
-                    color: temperature > 0 ? ApplicationInfo.colors.doubleDarkGray : ApplicationInfo.colors.blue
-                    anchors.horizontalCenter: col.horizontalCenter
+
+        RowLayout {
+            id: rowTemp
+            spacing: 0
+            anchors { left: parent.left; right: parent.right; top: parent.top; leftMargin:  ApplicationInfo.sliderGapWidth/2; rightMargin: ApplicationInfo.sliderGapWidth/2}
+            Repeater {
+                id: repeater
+                model: root.model.periodCount()
+                Column {
+                    property int temperature: Utils.getTemperature(index, root.model)
+                    Layout.fillWidth: true
+                    Item {
+                        width: 1
+                        height: -canvasSlider.calibrate(temperature) + canvasSlider.marginsTemperaturesDrawing
+                    }
+                    Image {
+                        source: Utils.getWeatherUrl(index, root.model)
+                        width: canvasSlider.weatherIconWidth
+                        height: width
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    Item {
+                        height: 15 * ApplicationInfo.ratio
+                        width: height
+                    }
+                    Image {
+                        id: circle
+                        source: ApplicationInfo.getImagePath("Circle.png")
+                        width: canvasSlider.circleIconWidth
+                        height: width
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    Item {
+                        height: 15 * ApplicationInfo.ratio
+                        width: height
+                    }
+                    TouchLabel {
+                        text: Utils.getTempFormat(temperature)
+                        pixelSize: 24
+                        color: temperature > 0 ? ApplicationInfo.colors.doubleDarkGray : ApplicationInfo.colors.blue
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                 }
             }
         }
+
         ColumnLayout {
             id: column
-            anchors.bottom: parent.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            width : canvasSlider.sliderItemWidth
+            anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
             TouchSlider {
                 id: touchSlider
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                Layout.preferredWidth: canvasSlider.sliderItemWidth - 2 * canvasSlider.drawingOffset
+                Layout.preferredWidth: (model.periodCount() - 1) * ApplicationInfo.sliderGapWidth + ApplicationInfo.sliderHandleWidth
+                Layout.alignment: Qt.AlignHCenter
                 minimumValue: 0
                 maximumValue: model.periodCount() - 1
             }
             RowLayout {
+                id: rowTime
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 spacing: 0
-                Layout.preferredWidth: canvasSlider.sliderItemWidth - ApplicationInfo.sliderHandleWidth
-                  Repeater {
+                Layout.preferredWidth: canvasSlider.sliderItemWidth
+                Repeater {
                     model: root.model.periodCount() + 1
                     TouchLabel {
                         pixelSize: 22
-                        Layout.preferredWidth: canvasSlider.drawingOffset
-                        horizontalAlignment: Qt.AlignHCenter
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: ApplicationInfo.sliderGapWidth
+                        horizontalAlignment: Text.AlignHCenter
                         Layout.alignment: Qt.AlignBaseline
                         text: (!!root.model && index !== root.model.periodCount()) ? Utils.getFromTime(index, root.model) : Utils.getToTime(index-1, root.model)
                     }
                 }
             }
         }
-
     }
+
     Separator {
         Layout.fillHeight: true
         Layout.fillWidth: ApplicationInfo.isPortraitMode ? true : false
         Layout.minimumHeight: 10
+        Layout.minimumWidth: 0
     }
 }

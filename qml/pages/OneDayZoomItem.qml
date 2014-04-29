@@ -60,6 +60,7 @@ GridLayout {
     Separator {
         Layout.fillHeight: true
         Layout.fillWidth: ApplicationInfo.isPortraitMode ? true : false
+        Layout.minimumWidth: 0
     }
     GridLayout {
         id: grid
@@ -183,5 +184,6 @@ GridLayout {
     Separator {
         Layout.fillHeight: true
         Layout.fillWidth: ApplicationInfo.isPortraitMode ? true : false
+        Layout.minimumWidth: 0
     }
 }
