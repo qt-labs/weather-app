@@ -50,7 +50,10 @@ GridLayout {
     property QtObject slider
     property QtObject model
     property bool singleItem
-    property string singleTimeString: "(" + Utils.getFromTime(0, dayModel) + " - " + Utils.getToTime(0, dayModel) + ")"
+    function singleTimeString(ind) {
+        //: The given time interval for the forecast displayed, i.e. (8AM - 2PM)
+        return qsTr("(%1 - %2)").arg(Utils.getFromTime(ind, dayModel)).arg(Utils.getToTime(ind, dayModel))
+    }
 
     readonly property int sliderValue: Math.round(root.slider.value)
 
@@ -62,7 +65,7 @@ GridLayout {
         id: grid
         rowSpacing: 0
         columnSpacing: 15 * ApplicationInfo.ratio
-        columns: 3
+        columns: 2
         TouchLabel {
             id: longDay
             text : Utils.getDay(root.sliderValue, root.model)
@@ -77,11 +80,12 @@ GridLayout {
             color: ApplicationInfo.colors.darkGray
         }
         TouchLabel {
-            text: root.singleItem ? root.singleTimeString : ""
+            text: root.singleTimeString(root.sliderValue)
             pixelSize: 20
-            horizontalAlignment: Text.AlignRight
             Layout.alignment: Qt.AlignBaseline
+            horizontalAlignment: Text.AlignLeft
             color:  ApplicationInfo.colors.darkGray
+            Layout.columnSpan: 2
         }
         Item {
             Image {
@@ -131,7 +135,7 @@ GridLayout {
             Layout.alignment: Qt.AlignLeft
         }
         RowLayout {
-            Layout.columnSpan: 3
+            Layout.columnSpan: 2
             TouchLabel {
                 id: rainLabel
                 text : qsTr("Precipitation: ") + Utils.getRain(root.sliderValue, root.model)
@@ -145,7 +149,7 @@ GridLayout {
             }
         }
         RowLayout {
-            Layout.columnSpan: 3
+            Layout.columnSpan: 2
             TouchLabel {
                 id: windLabel
                 text : qsTr("Wind: ") + Utils.getWindSpeed(root.sliderValue, root.model)
