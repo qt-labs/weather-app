@@ -65,7 +65,7 @@ BasicPage {
                 id: item
                 width: scrollview.width
                 implicitHeight: grid.implicitHeight
-                property int rowHeight: 118 * ApplicationInfo.ratio + 1
+                property int rowHeight: ApplicationInfo.constants.rowDelegateHeight + 1
                 Repeater {
                     id: repeater
                     model: cityLoaded ? ApplicationInfo.currentCityModel.daysCount() : null

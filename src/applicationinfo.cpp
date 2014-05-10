@@ -89,6 +89,8 @@ ApplicationInfo::ApplicationInfo(WeatherImageProvider *provider)
     m_hMargin =  m_isPortraitMode ? 20 * ratio() : 50 * ratio();
     m_applicationWidth = m_isMobile ? rect.width() : 1120;
 
+    m_constants->insert(QLatin1String("rowDelegateHeight"), QVariant(getSizeWithRatio(118)));
+
     m_currentIndexDay = -1;
 
     if (m_isMobile)

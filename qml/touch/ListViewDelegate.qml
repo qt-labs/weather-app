@@ -44,7 +44,7 @@ import org.qtproject.demo.weather 1.0
 
 Rectangle {
     id: rect
-    height: 118 * ApplicationInfo.ratio
+    height: ApplicationInfo.constants.rowDelegateHeight
     width: parent.width
     signal clicked
     signal deleteCity
@@ -134,8 +134,8 @@ Rectangle {
         }
         MouseArea {
             id: deleteMouse
-            implicitWidth: 110 * ApplicationInfo.ratio
-            implicitHeight: 110 * ApplicationInfo.ratio
+            implicitWidth: ApplicationInfo.constants.rowDelegateHeight
+            implicitHeight: implicitWidth
             Layout.minimumWidth: implicitWidth
             onClicked: if (!isSearchView) rect.deleteCity()
             Image {
@@ -147,6 +147,7 @@ Rectangle {
             }
             Rectangle {
                 anchors.fill: parent
+                anchors.margins: 8 * ApplicationInfo.ratio
                 color: ApplicationInfo.colors.smokeGray
                 opacity: deleteMouse.pressed ? 1 : 0
                 z: -1
