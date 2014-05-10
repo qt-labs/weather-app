@@ -125,20 +125,6 @@ function getMaxMinTemp(dayModel) {
     return [minTemp, maxTemp]
 }
 
-function getMaxTempLenght(cityModel) {
-    var maxLength = 1
-    for (var indexDay = 0; indexDay < cityModel.daysCount(); indexDay++) {
-        var day = cityModel.getDayModel(indexDay)
-        var range = getMaxMinTemp(day)
-        maxLength = Math.max(range[0].toString().length, maxLength)
-        maxLength = Math.max(range[1].toString().length, maxLength)
-    }
-    var stringTemp = "555" // temperatures estimated between -55 and +55
-    if (maxLength === 3)
-        stringTemp = "-" + stringTemp
-    return stringTemp.substring(0, maxLength)
-}
-
 // WeatherModel utils
 
 function getWindType(windspeed)

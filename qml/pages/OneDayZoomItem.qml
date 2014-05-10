@@ -125,14 +125,23 @@ GridLayout {
             Layout.alignment: Qt.AlignCenter
         }
         TouchLabel {
-            Layout.preferredWidth: expectedTextWidth(Utils.getTempFormat(Utils.getMaxTempLenght(ApplicationInfo.currentCityModel)))
-                                   + 4 * ApplicationInfo.ratio
+            id: tempLabel
             property int temp: Utils.getTemperature(root.sliderValue, root.model)
             text : Utils.getTempFormat(temp)
             color: temp < 0 ? ApplicationInfo.colors.blue : ApplicationInfo.colors.doubleDarkGray
             pixelSize: 72
             letterSpacing: -0.5
             Layout.alignment: Qt.AlignLeft
+            function getLongestTempWidth() {
+                var itemsInDay = root.model.periodCount()
+                var longestTempWidth = 0
+                for (var indexInDay = 0; indexInDay < itemsInDay; indexInDay++) {
+                    var tempTemperature = Utils.getTemperature(indexInDay, root.model)
+                    longestTempWidth = Math.max(longestTempWidth, tempLabel.expectedTextWidth(Utils.getTempFormat(tempTemperature)))
+                }
+                return longestTempWidth
+            }
+            Component.onCompleted: Layout.preferredWidth = getLongestTempWidth() + 4 * ApplicationInfo.ratio
         }
         RowLayout {
             Layout.columnSpan: 2
