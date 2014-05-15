@@ -63,7 +63,7 @@ public:
         QImage image(requestedSize.width() > 0 ? requestedSize.width() : width,
                      requestedSize.height() > 0 ? requestedSize.height() : height,
                      QImage::Format_ARGB32);
-        image.load(id);
+        image.load(QUrl("file:/" + id).toLocalFile());
         return image;
     }
 };
