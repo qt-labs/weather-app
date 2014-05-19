@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the examples of the Qt Toolkit.
@@ -45,6 +45,11 @@
 #include <QtGui/QGuiApplication>
 #include <QtQuick/QQuickWindow>
 #include <QtQml/QQmlApplicationEngine>
+
+#if defined(Q_OS_WINRT) && !defined(Q_OS_WINPHONE)
+#  include "winrtcharms.h"
+#  include <QtGui/QDesktopServices>
+#endif // Q_OS_WINRT && !Q_OS_WINPHONE
 
 #include "daymodel.h"
 #include "citymodel.h"
@@ -99,6 +104,16 @@ int main(int argc, char *argv[])
     QTranslator qtTranslator;
     qtTranslator.load("QuickForecast_" + QLocale::system().name(), ":/translations/");
     app.installTranslator(&qtTranslator);
+
+#if defined(Q_OS_WINRT) && !defined(Q_OS_WINPHONE)
+    // WinRT requires that we install a privacy policy link to the Charms bar when the network is
+    // used, so create a Charms menu item and connect a slot to handle it
+    WinRTSettingsCharm settingsCharm;
+    settingsCharm.addItem(app.tr("Privacy Policy"));
+    QObject::connect(&settingsCharm, &WinRTSettingsCharm::itemClicked, [](const QString &) {
+        QDesktopServices::openUrl(QUrl("http://qt.digia.com/Digia-Legal-Notice--Privacy-Policy/"));
+    });
+#endif // Q_OS_WINRT && !Q_OS_WINPHONE
 
 #ifndef Q_OS_IOS //QTBUG-34490
     QFontDatabase::addApplicationFont(":/weatherapp/fonts/OpenSans-Bold.ttf");

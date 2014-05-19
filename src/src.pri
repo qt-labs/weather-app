@@ -14,3 +14,8 @@ HEADERS += \
     $$PWD/citieslistmodel.h \
     $$PWD/weatherimageprovider.h \
     $$PWD/applicationpaths.h
+
+winrt:!winphone {
+    SOURCES += $$PWD/winrtcharms.cpp
+    HEADERS += $$PWD/winrtcharms.h
+}
