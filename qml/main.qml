@@ -147,9 +147,11 @@ ApplicationWindow {
     }
 
     statusBar: StatusBar {
+        id: statusbar
         width: parent.width
         opacity: label.text !== "" ? 1 : 0
-        height: label.text !== "" ? 65 * ApplicationInfo.ratio : 0
+        property real statusBarHeight: 65 * ApplicationInfo.ratio
+        height: label.text !== "" ? statusBarHeight : 0
 
         Behavior on height { NumberAnimation {easing.type: Easing.OutSine}}
         Behavior on opacity { NumberAnimation {}}
@@ -186,6 +188,17 @@ ApplicationWindow {
             color: ApplicationInfo.colors.mediumGray
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
+            function decreaseFontSizeOnNarrowScreen() {
+                if (label.implicitHeight > statusbar.statusBarHeight)
+                    pixelSize = Math.floor(pixelSize * statusbar.statusBarHeight/label.implicitHeight)
+            }
+            onTextChanged: {
+                if (text === "")
+                    pixelSize = 18
+                else
+                    decreaseFontSizeOnNarrowScreen()
+            }
+            onWidthChanged: decreaseFontSizeOnNarrowScreen()
         }
     }
 }

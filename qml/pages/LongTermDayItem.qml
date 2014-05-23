@@ -60,10 +60,10 @@ ObjectModel {
         Layout.alignment: Qt.AlignBaseline
     }
     Separator {
-        implicitWidth: 30
-        implicitHeight: rowHeight
+        implicitWidth: 5
+        implicitHeight: 5
         Layout.preferredHeight: rowHeight // sets the row height
-        Layout.fillWidth: true
+        Layout.fillHeight: false
         Layout.minimumHeight: 5
         Layout.minimumWidth: 5
     }
@@ -75,10 +75,9 @@ ObjectModel {
         onStatusChanged: if (status === Image.Error) updateStatusBar(ApplicationInfo.constants.errorLoadingImage + ": " + source)
     }
     Separator {
-        implicitWidth: 30
-        implicitHeight: 30
-        Layout.fillHeight: true
-        Layout.fillWidth: true
+        implicitWidth: 5
+        implicitHeight: 5
+        Layout.fillHeight: false
         Layout.minimumHeight: 5
         Layout.minimumWidth: 5
     }
@@ -102,12 +101,11 @@ ObjectModel {
         Layout.alignment: Qt.AlignBaseline
     }
     Separator {
-        implicitWidth: 30
-        implicitHeight: 30
-        Layout.fillHeight: true
-        Layout.fillWidth: true
+        implicitWidth: 5
+        implicitHeight: 5
         Layout.minimumHeight: 5
         Layout.minimumWidth: 5
+        visible: !isNarrow
     }
     Image {
         property int windIconSize: 32 * ApplicationInfo.ratio
@@ -115,16 +113,19 @@ ObjectModel {
         Layout.preferredHeight: windIconSize
         Layout.preferredWidth: windIconSize
         onStatusChanged: if (status === Image.Error) updateStatusBar(ApplicationInfo.constants.errorLoadingImage + ": " + source)
+        visible: !isNarrow
     }
     TouchLabel {
         text: Utils.getWindSpeed(dayModel.afternoonIndex, dayModel)
         pixelSize: 24
         Layout.alignment: Qt.AlignBaseline
+        visible: !isNarrow
     }
     TouchLabel {
         //: The wind speed unit, meters per second or miles per hour
         text: Utils.isMetricSystem() ? qsTr("m/s") : qsTr("mph")
         pixelSize: 18
         Layout.alignment: Qt.AlignBaseline
+        visible: !isNarrow
     }
 }

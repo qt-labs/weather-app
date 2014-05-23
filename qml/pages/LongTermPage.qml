@@ -97,10 +97,35 @@ BasicPage {
                     anchors.right: parent.right
                     anchors.leftMargin: ApplicationInfo.hMargin
                     anchors.rightMargin: ApplicationInfo.hMargin
+                    property bool isNarrowScreen: false
+                    property int itemsInModelCount: r1.count && !!r1.itemAt(0) ? r1.itemAt(0).count : 0
+
+                    function checkIfNarrowScreen() {
+                        if (itemsInModelCount !== 0 && ApplicationInfo.isPortraitMode && !isNarrowScreen && grid.implicitWidth > grid.width) {
+                            isNarrowScreen = true
+                            columns = itemsInModelCount - 4
+                        }
+                    }
+
+                    onWidthChanged: checkIfNarrowScreen()
+                    onImplicitWidthChanged: checkIfNarrowScreen()
+                    Connections {
+                        target: ApplicationInfo
+                        onIsPortraitModeChanged: {
+                            if (grid.itemsInModelCount !== 0) {
+                                if (!ApplicationInfo.isPortraitMode) {
+                                    grid.isNarrowScreen = false
+                                    grid.columns = grid.itemsInModelCount
+                                }
+                            }
+                        }
+                    }
+
                     flow: GridLayout.LeftToRight
                     rowSpacing: 0
                     columnSpacing: 6 * ApplicationInfo.ratio
-                    columns: r1.count && !!r1.itemAt(0) ? r1.itemAt(0).count : 0
+
+                    columns: grid.itemsInModelCount
                     Repeater {
                         id: r1
                         model: cityLoaded ? ApplicationInfo.currentCityModel.daysCount() : null
@@ -110,6 +135,7 @@ BasicPage {
                             property int last: dayIndex === r1.count
                             property var dayModel: ApplicationInfo.currentCityModel.getDayModel(dayIndex)
                             property int rowHeight: item.rowHeight
+                            property bool isNarrow: grid.isNarrowScreen
                         }
                     }
                 }

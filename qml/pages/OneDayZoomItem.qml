@@ -47,6 +47,7 @@ GridLayout {
     id: root
     flow: ApplicationInfo.isPortraitMode ? GridLayout.LeftToRight : GridLayout.TopToBottom
 
+    property real adjustementNeeded: 1
     property QtObject slider
     property QtObject model
     property bool singleItem
@@ -57,12 +58,9 @@ GridLayout {
 
     readonly property int sliderValue: Math.round(root.slider.value)
 
-    Separator {
-        Layout.fillHeight: true
-        Layout.fillWidth: ApplicationInfo.isPortraitMode ? true : false
-        Layout.minimumWidth: 0
-    }
+    Separator {}
     GridLayout {
+        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
         id: grid
         rowSpacing: 0
         columnSpacing: 15 * ApplicationInfo.ratio
@@ -121,8 +119,8 @@ GridLayout {
             }
 
             Layout.rowSpan: 1
-            Layout.preferredHeight: 160 * ApplicationInfo.ratio
-            Layout.preferredWidth: 160 * ApplicationInfo.ratio
+            Layout.preferredHeight: adjustementNeeded * 160 * ApplicationInfo.ratio
+            Layout.preferredWidth: adjustementNeeded * 160 * ApplicationInfo.ratio
             Layout.alignment: Qt.AlignCenter
         }
         TouchLabel {
@@ -130,7 +128,7 @@ GridLayout {
             property int temp: Utils.getTemperature(root.sliderValue, root.model)
             text : Utils.getTempFormat(temp)
             color: temp < 0 ? ApplicationInfo.colors.blue : ApplicationInfo.colors.doubleDarkGray
-            pixelSize: 72
+            pixelSize: adjustementNeeded * 72
             letterSpacing: -0.5
             Layout.alignment: Qt.AlignLeft
             function getLongestTempWidth() {
@@ -183,9 +181,5 @@ GridLayout {
             }
         }
     }
-    Separator {
-        Layout.fillHeight: true
-        Layout.fillWidth: ApplicationInfo.isPortraitMode ? true : false
-        Layout.minimumWidth: 0
-    }
+    Separator {}
 }

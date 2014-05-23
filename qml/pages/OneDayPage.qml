@@ -64,10 +64,25 @@ BasicPage {
         id: splitview
         flow: !ApplicationInfo.isPortraitMode ? GridLayout.LeftToRight : GridLayout.TopToBottom
         property bool singleItem: sliderItem.slider.minimumValue === sliderItem.slider.maximumValue
-        Separator {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+        property bool init: false
+
+        Connections {
+            target: page3
+            onHeightChanged: adjustHeight()
         }
+
+        function adjustHeight() {
+            if (!init) {
+                var adjust = (splitview.implicitHeight > splitview.height) ? Math.floor(splitview.height*10/splitview.implicitHeight)/10 : 1
+                if (adjust < 1 && adjust > 0) {
+                    init = true
+                    zoom.adjustementNeeded = adjust
+                    sliderItem.adjustementNeeded = adjust
+                }
+            }
+        }
+
+        Separator {}
         OneDayZoomItem {
             id: zoom
             slider: sliderItem.slider
@@ -75,22 +90,15 @@ BasicPage {
             singleItem: splitview.singleItem
         }
         Separator {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
             implicitHeight: 10 * ApplicationInfo.ratio
             implicitWidth: 10 * ApplicationInfo.ratio
-            Layout.minimumWidth: 0
-            Layout.minimumHeight: 0
-            visible: !singleItem
+            visible: !singleItem && !init
         }
         OneDaySliderItem {
             id: sliderItem
             visible: !singleItem
             model: page3.dayModel
         }
-        Separator {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-        }
+        Separator {}
     }
 }

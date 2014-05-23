@@ -42,10 +42,11 @@ import QtQuick 2.1
 import QtQuick.Layouts 1.0
 import org.qtproject.demo.weather 1.0
 
-Rectangle {
+Item {
     implicitHeight: ApplicationInfo.hMargin
     implicitWidth: ApplicationInfo.hMargin
-    Layout.minimumHeight: implicitHeight
-    Layout.minimumWidth: implicitWidth
-    opacity: 0
+    Layout.minimumHeight: 0
+    Layout.minimumWidth: 0
+    Layout.fillHeight: true
+    Layout.fillWidth: true
 }

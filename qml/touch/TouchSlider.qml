@@ -45,7 +45,9 @@ import org.qtproject.demo.weather 1.0
 
 Slider {
     id: slider
-    implicitHeight: ApplicationInfo.sliderHandleHeight + ApplicationInfo.ratio * 25
+    property real sliderHandleHeight: 0.
+    property real sliderHandleWidth: 0.
+    implicitHeight: sliderHandleHeight + ApplicationInfo.ratio * 25
     style: SliderStyle {
         groove: Rectangle {
             Rectangle {
@@ -67,13 +69,13 @@ Slider {
             }
         }
         handle: Item {
-            width: ApplicationInfo.sliderHandleWidth
-            height: ApplicationInfo.sliderHandleHeight
+            width: sliderHandleWidth
+            height: sliderHandleHeight
             Image {
                 anchors.centerIn: parent
                 source: ApplicationInfo.getImagePath(control.pressed ? "Pointer_pressed.png" : "Pointer.png")
-                width: ApplicationInfo.sliderHandleWidth + 16 * ApplicationInfo.ratio
-                height: ApplicationInfo.sliderHandleHeight + 16 * ApplicationInfo.ratio
+                width: sliderHandleWidth + 16 * ApplicationInfo.ratio
+                height: sliderHandleHeight + 16 * ApplicationInfo.ratio
             }
         }
     }

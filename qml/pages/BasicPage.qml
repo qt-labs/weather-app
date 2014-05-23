@@ -106,7 +106,10 @@ Item {
             anchors.right: parent.right
             spacing: 0
             anchors.verticalCenter: parent.verticalCenter
-            Separator {}
+            Separator {
+                Layout.fillWidth: false
+                Layout.preferredWidth: ApplicationInfo.hMargin
+            }
             Image {
                 source: ApplicationInfo.getImagePath("BackArrow.png")
                 Layout.preferredWidth: 22 * ApplicationInfo.ratio
@@ -151,7 +154,10 @@ Item {
                 letterSpacing: -0.15
                 Layout.alignment: Qt.AlignBaseline
             }
-            Separator {}
+            Separator {
+                Layout.fillWidth: false
+                Layout.preferredWidth: ApplicationInfo.hMargin
+            }
         }
         Rectangle {
             width: parent.width

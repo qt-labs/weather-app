@@ -49,24 +49,24 @@ GridLayout {
 
     property alias slider: touchSlider
     property QtObject model
+    property real adjustementNeeded: 1
+    property real sliderGapWidth: adjustementNeeded * ApplicationInfo.sliderGapWidth
+    property real sliderHandleWidth: adjustementNeeded * ApplicationInfo.sliderHandleWidth
+    property real sliderHandleHeight: adjustementNeeded * ApplicationInfo.sliderHandleHeight
 
-    Separator {
-        Layout.fillHeight: true
-        Layout.fillWidth: ApplicationInfo.isPortraitMode ? true : false
-        Layout.minimumHeight: 10
-        Layout.minimumWidth: 0
-    }
+    Separator {}
     Canvas {
+        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
         id: canvasSlider
-        property int sliderItemWidth : (model.periodCount() + 1) * ApplicationInfo.sliderGapWidth
+        property int sliderItemWidth : (model.periodCount() + 1) * sliderGapWidth
         property var rangeTemp: Utils.getMaxMinTemp(model)
 
         implicitWidth: sliderItemWidth
         implicitHeight: rowTemp.implicitHeight + column.implicitHeight
 
         property int marginsTemperaturesDrawing: calibrate(rangeTemp[1]) +  10 * ApplicationInfo.ratio
-        property real circleIconWidth: 20 * ApplicationInfo.ratio
-        property real weatherIconWidth: 80 * ApplicationInfo.ratio
+        property real circleIconWidth: adjustementNeeded * 20 * ApplicationInfo.ratio
+        property real weatherIconWidth: adjustementNeeded * 80 * ApplicationInfo.ratio
 
         function calibrate(temperature) {
             return 2 * ApplicationInfo.ratio * temperature
@@ -102,7 +102,7 @@ GridLayout {
         RowLayout {
             id: rowTemp
             spacing: 0
-            anchors { left: parent.left; right: parent.right; top: parent.top; leftMargin:  ApplicationInfo.sliderGapWidth/2; rightMargin: ApplicationInfo.sliderGapWidth/2}
+            anchors { left: parent.left; right: parent.right; top: parent.top; leftMargin:  sliderGapWidth/2; rightMargin: sliderGapWidth/2}
             Repeater {
                 id: repeater
                 model: root.model.periodCount()
@@ -149,7 +149,9 @@ GridLayout {
             anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
             TouchSlider {
                 id: touchSlider
-                Layout.preferredWidth: (model.periodCount() - 1) * ApplicationInfo.sliderGapWidth + ApplicationInfo.sliderHandleWidth
+                sliderHandleWidth: root.sliderHandleWidth
+                sliderHandleHeight: root.sliderHandleHeight
+                Layout.preferredWidth: (model.periodCount() - 1) * sliderGapWidth + sliderHandleWidth
                 Layout.alignment: Qt.AlignHCenter
                 minimumValue: 0
                 maximumValue: model.periodCount() - 1
@@ -164,7 +166,7 @@ GridLayout {
                     TouchLabel {
                         pixelSize: 22
                         Layout.fillWidth: true
-                        Layout.preferredWidth: ApplicationInfo.sliderGapWidth
+                        Layout.preferredWidth: sliderGapWidth
                         horizontalAlignment: Text.AlignHCenter
                         Layout.alignment: Qt.AlignBaseline
                         text: (!!root.model && index !== root.model.periodCount()) ? Utils.getFromTime(index, root.model) : Utils.getToTime(index-1, root.model)
@@ -174,10 +176,5 @@ GridLayout {
         }
     }
 
-    Separator {
-        Layout.fillHeight: true
-        Layout.fillWidth: ApplicationInfo.isPortraitMode ? true : false
-        Layout.minimumHeight: 10
-        Layout.minimumWidth: 0
-    }
+    Separator {}
 }
