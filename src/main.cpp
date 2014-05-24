@@ -73,7 +73,6 @@ static const struct {
     const char *type;
     int major, minor;
 } qmldir_models [] = {
-    { "CitiesModel", 1, 0 },
     { "WeatherModel", 1, 0 },
 };
 
