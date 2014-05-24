@@ -136,7 +136,7 @@ BasicPage {
 
     Connections {
         target: Qt.application
-        onStateChanged: if (ApplicationInfo.constants.isMobile && Qt.application.state === Qt.ApplicationSuspended) availableCities.saveCities()
+        onStateChanged: if (Qt.application.state === Qt.ApplicationSuspended) availableCities.saveCities()
     }
 
     Stack.onStatusChanged: {
