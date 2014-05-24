@@ -52,7 +52,7 @@ Item {
     signal clearSearchBox
 
     property Component pageComponent
-    property bool isLocked: true
+    property bool isLocked: Stack.status !== Stack.Active
     property string title1
     property string title2
     property string title3

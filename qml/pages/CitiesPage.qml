@@ -140,7 +140,6 @@ BasicPage {
     }
 
     Stack.onStatusChanged: {
-        isLocked = !(Stack.status === Stack.Active)
         if (Stack.status === Stack.Activating)
             updateStatusBar("")
     }

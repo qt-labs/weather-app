@@ -93,7 +93,4 @@ BasicPage {
             Layout.fillWidth: true
         }
     }
-
-    Stack.onStatusChanged: isLocked = !(Stack.status === Stack.Active)
-
 }

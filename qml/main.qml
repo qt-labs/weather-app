@@ -54,7 +54,6 @@ ApplicationWindow {
     property Component citiesPage: CitiesPage {
         onUpdateStatusBar: statusBarMessage = message
         onNextPage: if (!isLocked) {
-                        isLocked = true
                         pageView.push(longTermPage)
                         clearSearchBox()
                     }
@@ -62,7 +61,6 @@ ApplicationWindow {
     property Component longTermPage: LongTermPage {
         onUpdateStatusBar: statusBarMessage = message
         onNextPage: if (!isLocked) {
-                        isLocked = true
                         pageView.push(oneDayPage)
                     }
         onPreviousPage: {
@@ -73,7 +71,6 @@ ApplicationWindow {
     property Component oneDayPage: OneDayPage {
         onUpdateStatusBar: statusBarMessage = message
         onPreviousPage: if (!isLocked) {
-                            isLocked = true
                             pageView.pop()
                         }
     }

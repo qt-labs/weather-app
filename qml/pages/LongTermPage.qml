@@ -53,8 +53,6 @@ BasicPage {
 
     onCityLoadedChanged: updateStatusBar(ApplicationInfo.currentCityModel.copyright + " <a href=" + ApplicationInfo.currentCityModel.sourceXml + "\>(source)")
 
-    isLocked: true
-
     pageComponent: Item {
         TouchScrollView {
             id: scrollview
@@ -147,7 +145,6 @@ BasicPage {
         target: ApplicationInfo.currentCityModel
         onError: {
             cityLoaded = false
-            isLocked = false
             previousPage()
             updateStatusBar(errorMessage)
         }
@@ -157,13 +154,11 @@ BasicPage {
     WeatherModel {
         id: weathermodel
         onShowLongTerm: {
-            isLocked = false
             cityLoaded = true
         }
         onError: {
             cityLoaded = false
             lastLoadedCity = ""
-            isLocked = false
             previousPage()
             updateStatusBar(qsTr("Problem loading the data: ") + errorMessage)
         }
