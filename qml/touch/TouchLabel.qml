@@ -56,6 +56,7 @@ Label {
     horizontalAlignment: Text.AlignLeft
     elide: Text.ElideRight
     linkColor: ApplicationInfo.colors.blue
+    renderType: ApplicationInfo.isMobile ? Text.QtRendering : Text.NativeRendering
 
     function expectedTextWidth(value)
     {

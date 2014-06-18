@@ -49,6 +49,7 @@ TextField {
     implicitWidth: parent.width
     property bool isEmpty: true
     style: TextFieldStyle {
+        renderType: ApplicationInfo.isMobile ? Text.QtRendering : Text.NativeRendering
         background :
             Rectangle {
             radius: 8
