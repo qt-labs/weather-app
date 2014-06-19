@@ -51,7 +51,9 @@ BasicPage {
 
     property bool cityLoaded: false
 
-    onCityLoadedChanged: updateStatusBar(ApplicationInfo.currentCityModel.copyright + " <a href=" + ApplicationInfo.currentCityModel.sourceXml + "\>(source)")
+    property string sourceLink: ApplicationInfo.currentCityModel.sourceXml.replace(/\/forecast.xml$/, "")
+
+    onCityLoadedChanged: updateStatusBar(ApplicationInfo.currentCityModel.copyright + " <a href=" + sourceLink + "\>(source)")
 
     pageComponent: Item {
         TouchScrollView {
