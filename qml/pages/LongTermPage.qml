@@ -72,8 +72,8 @@ BasicPage {
                     Rectangle {
                         color: mouse.pressed ? ApplicationInfo.colors.smokeGray : ApplicationInfo.colors.white
                         width: scrollview.width
-                        height: item.rowHeight + 1
-                        y: (item.rowHeight + 1) * index
+                        height: item.rowHeight
+                        y: item.rowHeight * index
                         MouseArea {
                             id: mouse
                             anchors.fill: parent
