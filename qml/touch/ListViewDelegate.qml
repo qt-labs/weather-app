@@ -138,6 +138,9 @@ Rectangle {
             implicitHeight: implicitWidth
             Layout.minimumWidth: implicitWidth
             onClicked: if (!isSearchView) rect.deleteCity()
+            Accessible.name: qsTr("Remove %1").arg(city.text)
+            Accessible.role: Accessible.Button
+            function accessiblePressAction () { if (!isSearchView) rect.deleteCity() }
             Image {
                 id: imageRemove
                 anchors.centerIn: parent
