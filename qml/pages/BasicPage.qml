@@ -178,7 +178,7 @@ Item {
     TouchTextField {
         id: searchField
         z: 2
-        visible: page.Stack.index === 0 ? 1 : 0
+        visible: page.Stack.index === 0 ? true : false
         anchors.right: blueRect.right
         anchors.top: blueRect.top
         anchors.bottom: blueRect.bottom
