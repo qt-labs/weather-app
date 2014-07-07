@@ -115,6 +115,9 @@ Item {
                 Layout.preferredWidth: 22 * ApplicationInfo.ratio
                 Layout.preferredHeight: 35 * ApplicationInfo.ratio
                 visible: page.Stack.index > 0
+                Accessible.role: Accessible.Button
+                Accessible.name: qsTr("Back")
+                function accessiblePressAction () { backPressed() }
             }
             Rectangle {
                 opacity: 0
@@ -171,8 +174,12 @@ Item {
         MouseArea {
             id: mouseBack
             anchors.fill: parent
-            onClicked: if (!isLocked) page.previousPage()
+            onClicked: backPressed()
         }
+    }
+
+    function backPressed() {
+        if (!isLocked) page.previousPage()
     }
 
     TouchTextField {
