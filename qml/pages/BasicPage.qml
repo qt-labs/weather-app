@@ -133,6 +133,7 @@ Item {
                 font.weight: Font.Bold
                 Layout.maximumWidth: ApplicationInfo.applicationWidth - t3.implicitWidth - 2 * ApplicationInfo.hMargin - 5 * ApplicationInfo.ratio - 42 * ApplicationInfo.ratio
                 Layout.alignment: Qt.AlignBaseline
+                Accessible.ignored: true
             }
             TouchLabel {
                 text: "- " + title2
@@ -143,6 +144,7 @@ Item {
                 Layout.alignment: Qt.AlignBaseline
                 Layout.maximumWidth: freeSpace > implicitWidth ? freeSpace : 0
                 property real freeSpace: ApplicationInfo.applicationWidth - t1.width - t3.implicitWidth - 2 * ApplicationInfo.hMargin - 5 * ApplicationInfo.ratio - 42 * ApplicationInfo.ratio
+                Accessible.ignored: true
             }
             Item {
                 Layout.fillWidth: true
@@ -156,10 +158,20 @@ Item {
                 pixelSize: 22
                 letterSpacing: -0.15
                 Layout.alignment: Qt.AlignBaseline
+                Accessible.ignored: true
             }
             Separator {
                 Layout.fillWidth: false
                 Layout.preferredWidth: ApplicationInfo.hMargin
+                Item {
+                    // This item exist solely for accessibility purposes.
+                    x: -parent.x + t1.x
+                    visible: true
+                    width: titleRow.width - t1.x
+                    height: parent.height
+                    Accessible.role: Accessible.StaticText
+                    Accessible.name: title1 + " " + title2 + " " + title3
+                }
             }
         }
         Rectangle {
