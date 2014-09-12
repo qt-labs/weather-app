@@ -66,33 +66,9 @@ BasicPage {
                 width: scrollview.width
                 implicitHeight: grid.implicitHeight
                 property int rowHeight: ApplicationInfo.constants.rowDelegateHeight + 1
-                Repeater {
-                    id: repeater
-                    model: cityLoaded ? ApplicationInfo.currentCityModel.daysCount() : null
-                    Rectangle {
-                        color: mouse.pressed ? ApplicationInfo.colors.smokeGray : ApplicationInfo.colors.white
-                        width: scrollview.width
-                        height: item.rowHeight
-                        y: item.rowHeight * index
-                        MouseArea {
-                            id: mouse
-                            anchors.fill: parent
-                            onClicked: {
-                                ApplicationInfo.currentIndexDay = index
-                                nextPage()
-                            }
-                        }
-                        Rectangle {
-                            width: parent.width
-                            height: 1
-                            anchors.bottom: parent.bottom
-                            visible: index != (repeater.count - 1)
-                            color: ApplicationInfo.colors.paleGray
-                        }
-                    }
-                }
                 GridLayout {
                     id: grid
+                    Accessible.role: Accessible.List
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.leftMargin: ApplicationInfo.hMargin

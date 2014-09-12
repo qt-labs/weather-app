@@ -52,14 +52,45 @@ ObjectModel {
         font.weight: Font.DemiBold
         Layout.alignment: Qt.AlignBaseline
         font.capitalization: Font.Capitalize
+
+        Accessible.ignored: true
+
+        Rectangle {
+            color: mouse.pressed ? ApplicationInfo.colors.smokeGray : ApplicationInfo.colors.white
+            width: parent.parent.width + 2* ApplicationInfo.hMargin
+            height: rowHeight
+            y: -parent.y + separator1.y
+            z: -1
+            x: -ApplicationInfo.hMargin
+            Accessible.role: Accessible.Button
+            Accessible.name: qsTr("%1 %2 - temperature low: %3, high: %4, wind: %5 %6").arg(Utils.getDay(0, dayModel)).arg(Utils.getShortDate(dayModel.date)).arg(lowTemp.text).arg(highTemp.text).arg(windSpeed.text).arg(windSpeedUnit.text)
+            Accessible.description: qsTr("press for details")
+            MouseArea {
+                id: mouse
+                anchors.fill: parent
+                onClicked: {
+                    ApplicationInfo.currentIndexDay = index
+                    nextPage()
+                }
+            }
+            Rectangle {
+                width: parent.width
+                height: 1
+                anchors.top: parent.top
+                visible: index > 0
+                color: ApplicationInfo.colors.paleGray
+            }
+        }
     }
     TouchLabel {
         text: Utils.getShortDate(dayModel.date)
         pixelSize: 20
         letterSpacing: -0.15
         Layout.alignment: Qt.AlignBaseline
+        Accessible.ignored: true
     }
     Separator {
+        id: separator1
         implicitWidth: 5
         implicitHeight: 5
         Layout.preferredHeight: rowHeight // sets the row height
@@ -82,10 +113,12 @@ ObjectModel {
         Layout.minimumWidth: 5
     }
     TouchLabel {
+        id: lowTemp
         property string temp: Utils.getMinTemp(dayModel)
         text: Utils.getTempFormat(temp)
         color: temp < 0 ? ApplicationInfo.colors.blue : ApplicationInfo.colors.doubleDarkGray
         Layout.alignment: Qt.AlignBaseline
+        Accessible.ignored: true
     }
     Rectangle {
         id: separator2
@@ -94,11 +127,13 @@ ObjectModel {
         color: ApplicationInfo.colors.lightGray
     }
     TouchLabel {
+        id: highTemp
         property int temp: Utils.getMaxTemp(dayModel)
         text: Utils.getTempFormat(temp)
         horizontalAlignment: Qt.AlignRight
         color: temp < 0 ? ApplicationInfo.colors.blue : ApplicationInfo.colors.doubleDarkGray
         Layout.alignment: Qt.AlignBaseline
+        Accessible.ignored: true
     }
     Separator {
         implicitWidth: 5
@@ -116,16 +151,20 @@ ObjectModel {
         visible: !isNarrow
     }
     TouchLabel {
+        id: windSpeed
         text: Utils.getWindSpeed(dayModel.afternoonIndex, dayModel)
         pixelSize: 24
         Layout.alignment: Qt.AlignBaseline
         visible: !isNarrow
+        Accessible.ignored: true
     }
     TouchLabel {
+        id: windSpeedUnit
         //: The wind speed unit, meters per second or miles per hour
         text: Utils.isMetricSystem() ? qsTr("m/s") : qsTr("mph")
         pixelSize: 18
         Layout.alignment: Qt.AlignBaseline
         visible: !isNarrow
+        Accessible.ignored: true
     }
 }
