@@ -72,6 +72,7 @@ BasicPage {
             interactive: true
             flickableDirection: Flickable.VerticalFlick
             model: ApplicationInfo.foundCities
+            Accessible.role: Accessible.List
             delegate: ListViewDelegate {
                 isSearchView: true
                 onClicked: validateSearchIndex(index)
@@ -86,6 +87,7 @@ BasicPage {
             model: availableCities
             interactive: true
             flickableDirection: Flickable.VerticalFlick
+            Accessible.role: Accessible.List
             delegate: ListViewDelegate {
                 onClicked: page1.processCity(index)
                 onDeleteCity: availableCities.removeCityModel(index)

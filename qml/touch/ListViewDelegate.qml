@@ -52,6 +52,7 @@ Rectangle {
     property bool isSearchView: false
 
     color: mouseNext.pressed ? ApplicationInfo.colors.smokeGray : ApplicationInfo.colors.white
+    Accessible.role: Accessible.ListItem
 
     GridLayout {
         id: _grid
@@ -60,12 +61,18 @@ Rectangle {
         rowSpacing: 4 * ApplicationInfo.ratio
         columnSpacing: 0
         columns: 2
+        Accessible.role: Accessible.Button
+        Accessible.name: loader.item.accessibleName
+        function accessiblePressAction() {
+            rect.clicked()
+        }
         Rectangle {
             Layout.preferredWidth: ApplicationInfo.hMargin
             Layout.fillHeight: true
             opacity: 0
         }
         Loader {
+            id: loader
             sourceComponent: isSearchView ? searchViewRow : cityViewRow
             Layout.fillHeight: true
             Layout.fillWidth: true
@@ -94,6 +101,7 @@ Rectangle {
 
     property Component searchViewRow: RowLayout {
         spacing: 0
+        property string accessibleName: country
         TouchLabel {
             color: ApplicationInfo.colors.mediumGray
             id: countryLabel
@@ -102,6 +110,7 @@ Rectangle {
             Layout.alignment: Qt.AlignBaseline
             Layout.fillWidth: true
             Layout.maximumWidth: rect.width - 2 * ApplicationInfo.hMargin
+            Accessible.ignored: true
         }
         Rectangle {
             Layout.preferredWidth: ApplicationInfo.hMargin
@@ -112,12 +121,14 @@ Rectangle {
 
     property Component cityViewRow: RowLayout {
         spacing: 0
+        property string accessibleName: city.text + " - " + countryLabel.text
         TouchLabel {
             id: city
             text: name
             font.weight: Font.DemiBold
             Layout.maximumWidth: maximumWidth * 2
             Layout.alignment: Qt.AlignBaseline
+            Accessible.ignored: true
         }
         Item {
             implicitWidth: 12 * ApplicationInfo.ratio
@@ -131,6 +142,7 @@ Rectangle {
             Layout.alignment: Qt.AlignBaseline | Qt.AlignLeft
             Layout.fillWidth: true
             Layout.minimumWidth: 0
+            Accessible.ignored: true
         }
         MouseArea {
             id: deleteMouse
