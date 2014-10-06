@@ -51,6 +51,7 @@ GridLayout {
     property QtObject slider
     property QtObject model
     property bool singleItem
+
     function singleTimeString(ind) {
         //: The given time interval for the forecast displayed, i.e. (8AM - 2PM)
         return qsTr("(%1 - %2)").arg(Utils.getFromTime(ind, dayModel)).arg(Utils.getToTime(ind, dayModel))
@@ -71,20 +72,25 @@ GridLayout {
             font.weight: Font.Bold
             Layout.alignment: Qt.AlignBaseline
             font.capitalization: Font.Capitalize
+            Accessible.name: longDay.text + " " + dateLabel.text + " " + timeLabel.text
         }
         TouchLabel {
+            id: dateLabel
             text: Utils.getLongDate(root.model.date)
             pixelSize: 30
             Layout.alignment: Qt.AlignBaseline | Qt.AlignLeft
             color: ApplicationInfo.colors.darkGray
+            Accessible.ignored: true
         }
         TouchLabel {
+            id: timeLabel
             text: root.singleTimeString(root.sliderValue)
             pixelSize: 20
             Layout.alignment: Qt.AlignBaseline
             horizontalAlignment: Text.AlignLeft
             color:  ApplicationInfo.colors.darkGray
             Layout.columnSpan: 2
+            Accessible.ignored: true
         }
         Item {
             Image {
@@ -141,6 +147,8 @@ GridLayout {
                 return longestTempWidth
             }
             Component.onCompleted: Layout.preferredWidth = getLongestTempWidth() + 4 * ApplicationInfo.ratio
+            Accessible.name: text
+            Accessible.description: qsTr("Temperature for this part of the day")
         }
         RowLayout {
             Layout.columnSpan: 2
@@ -149,12 +157,15 @@ GridLayout {
                 text : qsTr("Precipitation: ") + Utils.getRain(root.sliderValue, root.model)
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                 pixelSize: 30
+                Accessible.name: text + " " + rainUnit.text
             }
             TouchLabel {
                 //: The rain level unit, millimeters or inches
+                id: rainUnit
                 text: Utils.isMetricSystem() ? qsTr("mm") : qsTr("in")
                 pixelSize: 24
                 Layout.alignment: Qt.AlignBaseline | Qt.AlignLeft
+                Accessible.ignored: true
             }
         }
         RowLayout {
@@ -164,12 +175,15 @@ GridLayout {
                 text : qsTr("Wind: ") + Utils.getWindSpeed(root.sliderValue, root.model)
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                 pixelSize: 30
+                Accessible.name: text + " " + windUnit.text
             }
             TouchLabel {
                 //: The wind speed unit, meters per second or miles per hour
+                id: windUnit
                 text: Utils.isMetricSystem() ? qsTr("m/s") : qsTr("mph")
                 pixelSize: 24
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
+                Accessible.ignored: true
             }
             Image {
                 source: Utils.getWindUrl(root.sliderValue, root.model)

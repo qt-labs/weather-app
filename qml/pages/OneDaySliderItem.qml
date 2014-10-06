@@ -139,6 +139,7 @@ GridLayout {
                         pixelSize: 24
                         color: temperature > 0 ? ApplicationInfo.colors.doubleDarkGray : ApplicationInfo.colors.blue
                         anchors.horizontalCenter: parent.horizontalCenter
+                        Accessible.ignored: true
                     }
                 }
             }
@@ -155,6 +156,10 @@ GridLayout {
                 Layout.alignment: Qt.AlignHCenter
                 minimumValue: 0
                 maximumValue: model.periodCount() - 1
+
+                // these properties are needed for accessibility, for some reason I cannot put the Math.round expression in the same line
+                readonly property int sliderValue: Math.round(touchSlider.value)
+                Accessible.name: qsTr("%1 - %2").arg(Utils.getFromTime(sliderValue, root.model)).arg(Utils.getToTime(sliderValue, root.model))
             }
             RowLayout {
                 id: rowTime
@@ -170,6 +175,7 @@ GridLayout {
                         horizontalAlignment: Text.AlignHCenter
                         Layout.alignment: Qt.AlignBaseline
                         text: (!!root.model && index !== root.model.periodCount()) ? Utils.getFromTime(index, root.model) : Utils.getToTime(index-1, root.model)
+                        Accessible.ignored: true
                     }
                 }
             }

@@ -107,6 +107,10 @@
         <source>m/s</source>
         <translation>m/s</translation>
     </message>
+    <message>
+        <source>Temperature for this part of the day</source>
+        <translation>Temperatur für diesen Teil des Tages</translation>
+    </message>
 </context>
 <context>
     <name>WeatherModel</name>
