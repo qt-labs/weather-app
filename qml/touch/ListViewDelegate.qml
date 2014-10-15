@@ -61,11 +61,6 @@ Rectangle {
         rowSpacing: 4 * ApplicationInfo.ratio
         columnSpacing: 0
         columns: 2
-        Accessible.role: Accessible.Button
-        Accessible.name: loader.item.accessibleName
-        function accessiblePressAction() {
-            rect.clicked()
-        }
         Rectangle {
             Layout.preferredWidth: ApplicationInfo.hMargin
             Layout.fillHeight: true
@@ -97,6 +92,11 @@ Rectangle {
         width: parent.width - 80 * ApplicationInfo.ratio - ApplicationInfo.hMargin
         height: parent.height
         onClicked: rect.clicked()
+        Accessible.role: Accessible.Button
+        Accessible.name: loader.item.accessibleName
+        function accessiblePressAction() {
+            rect.clicked()
+        }
     }
 
     property Component searchViewRow: RowLayout {
