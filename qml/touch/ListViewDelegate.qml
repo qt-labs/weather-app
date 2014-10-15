@@ -54,6 +54,18 @@ Rectangle {
     color: mouseNext.pressed ? ApplicationInfo.colors.smokeGray : ApplicationInfo.colors.white
     Accessible.role: Accessible.ListItem
 
+    MouseArea {
+        id: mouseNext
+        anchors.left: parent.left
+        width: parent.width - 80 * ApplicationInfo.ratio - ApplicationInfo.hMargin
+        height: parent.height
+        onClicked: rect.clicked()
+        Accessible.role: Accessible.Button
+        Accessible.name: loader.item.accessibleName
+        function accessiblePressAction() {
+            rect.clicked()
+        }
+    }
     GridLayout {
         id: _grid
         anchors.fill: parent
@@ -85,18 +97,6 @@ Rectangle {
         anchors.bottom: parent.bottom
         width: parent.width
         color: ApplicationInfo.colors.paleGray
-    }
-    MouseArea {
-        id: mouseNext
-        anchors.left: parent.left
-        width: parent.width - 80 * ApplicationInfo.ratio - ApplicationInfo.hMargin
-        height: parent.height
-        onClicked: rect.clicked()
-        Accessible.role: Accessible.Button
-        Accessible.name: loader.item.accessibleName
-        function accessiblePressAction() {
-            rect.clicked()
-        }
     }
 
     property Component searchViewRow: RowLayout {
