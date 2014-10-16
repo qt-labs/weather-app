@@ -132,5 +132,21 @@
         <source>°C</source>
         <translation>°C</translation>
     </message>
+    <message>
+        <source>meters per second</source>
+        <translation>Meter pro Sekunde</translation>
+    </message>
+    <message>
+        <source>miles per hour</source>
+        <translation>Meilen pro Stunde</translation>
+    </message>
+    <message>
+        <source>millimeters</source>
+        <translation>Millimeter</translation>
+    </message>
+    <message>
+        <source>inches</source>
+        <translation>Inch</translation>
+    </message>
 </context>
 </TS>

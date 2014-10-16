@@ -163,6 +163,7 @@ GridLayout {
                 //: The rain level unit, millimeters or inches
                 id: rainUnit
                 text: Utils.isMetricSystem() ? qsTr("mm") : qsTr("in")
+                Accessible.name: Utils.expandAbbreviation("mm")
                 pixelSize: 24
                 Layout.alignment: Qt.AlignBaseline | Qt.AlignLeft
                 Accessible.ignored: true
@@ -181,6 +182,7 @@ GridLayout {
                 //: The wind speed unit, meters per second or miles per hour
                 id: windUnit
                 text: Utils.isMetricSystem() ? qsTr("m/s") : qsTr("mph")
+                Accessible.name: Utils.expandAbbreviation("m/s")
                 pixelSize: 24
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                 Accessible.ignored: true

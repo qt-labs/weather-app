@@ -63,7 +63,7 @@ ObjectModel {
             z: -1
             x: -ApplicationInfo.hMargin
             Accessible.role: Accessible.Button
-            Accessible.name: qsTr("%1 %2 - temperature low: %3, high: %4, wind: %5 %6").arg(Utils.getDay(0, dayModel)).arg(Utils.getShortDate(dayModel.date)).arg(lowTemp.text).arg(highTemp.text).arg(windSpeed.text).arg(windSpeedUnit.text)
+            Accessible.name: qsTr("%1 %2 - temperature low: %3, high: %4, wind: %5 %6").arg(Utils.getDay(0, dayModel)).arg(Utils.getShortDate(dayModel.date)).arg(lowTemp.text).arg(highTemp.text).arg(windSpeed.text).arg(Utils.expandAbbreviation("m/s"))
             Accessible.description: qsTr("press for details")
             function accessiblePressAction () {
                 ApplicationInfo.currentIndexDay = index

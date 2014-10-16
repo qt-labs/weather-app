@@ -274,3 +274,16 @@ function isMetricSystem()
 {
     return Qt.locale().measurementSystem === QtQml.Locale.MetricSystem
 }
+
+function expandAbbreviation(abbrevCode)
+{
+    switch (abbrevCode)
+    {
+        case "m/s":
+            return isMetricSystem() ? qsTr("meters per second") : qsTr("miles per hour")
+        case "mm":
+            return isMetricSystem() ? qsTr("millimeters") : qsTr("inches")
+    }
+
+    return "UNKNOWN"
+}
