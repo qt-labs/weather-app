@@ -160,6 +160,7 @@ GridLayout {
                 // these properties are needed for accessibility, for some reason I cannot put the Math.round expression in the same line
                 readonly property int sliderValue: Math.round(touchSlider.value)
                 Accessible.name: qsTr("%1 - %2").arg(Utils.getFromTime(sliderValue, root.model)).arg(Utils.getToTime(sliderValue, root.model))
+                Accessible.description: qsTr("change value to get weather information for part of the day")
             }
             RowLayout {
                 id: rowTime
