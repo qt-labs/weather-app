@@ -163,7 +163,7 @@ function updateDayModel(dayModel, item)
 {
     var windIconUrl = getWindSymbolUrl(item.windSpeed, item.windDirectionDeg)
     var weatherUrl = extractSymbolUrl(item.symbolcode)
-    dayModel.addRow(weatherUrl, item.from, item.to, item.temperature, item.windSpeed, windIconUrl, item.rain, item.period)
+    dayModel.addRow(weatherUrl, item.from, item.to, item.temperature, item.windSpeed, item.windDirectionName, windIconUrl, item.rain, item.period)
 }
 
 function getItemDate(item)
@@ -252,6 +252,11 @@ function getWindSpeed(index, dayModel)
 {
     var speed_ms = dayModel.getDayDetails(index, "windSpeed")
     return isMetricSystem() ? speed_ms : Math.round(speed_ms * 223.694)/100 // convert to mph
+}
+
+function getWindDirectionName(index, dayModel)
+{
+    return dayModel.getDayDetails(index, "windDirectionName")
 }
 
 function getWindUrl(index, dayModel)

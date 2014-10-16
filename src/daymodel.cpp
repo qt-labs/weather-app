@@ -66,6 +66,8 @@ QVariant DayModel::data(const QModelIndex &index, int role) const
         return m_data.at(index.row()).windSpeed;
     if (role == WindUrlRole)
         return m_data.at(index.row()).windUrl;
+    if (role == WindDirectionNameRole)
+        return m_data.at(index.row()).windDirectionName;
     if (role == RainRole)
         return m_data.at(index.row()).rain;
     return QVariant();
@@ -80,6 +82,7 @@ QHash<int, QByteArray> DayModel::roleNames() const
     rn[TemperatureRole] = "temperature";
     rn[WindSpeedRole]   = "windSpeed";
     rn[WindUrlRole]     = "windUrl";
+    rn[WindDirectionNameRole] = "windDirectionName";
     rn[RainRole]        = "rain";
     return rn;
 }
@@ -91,7 +94,7 @@ void DayModel::clear()
     m_data.clear();
 }
 
-void DayModel::addRow(QString weatherUrl, QString from, QString to, QString temperature, QString windSpeed, QString windUrl, QString rain) {
+void DayModel::addRow(QString weatherUrl, QString from, QString to, QString temperature, QString windSpeed, QString windDirectionName, QString windUrl, QString rain) {
     QStringList m_images;
     DayModelStructure temp;
     temp.from = from;
@@ -103,6 +106,7 @@ void DayModel::addRow(QString weatherUrl, QString from, QString to, QString temp
     temp.temperature = temperature;
     temp.windSpeed = windSpeed;
     temp.windUrl = windUrl;
+    temp.windDirectionName = windDirectionName;
     m_images.append(windUrl);
     temp.rain = rain;
     m_data.append(temp);
@@ -147,6 +151,8 @@ QString DayModel::getDayDetails(int index, QString prop) const
             return temp.temperature;
         if (prop == "windSpeed")
             return temp.windSpeed;
+        if (prop == "windDirectionName")
+            return temp.windDirectionName;
         if (prop == "windUrl")
             return temp.windUrl;
         if (prop == "rain")

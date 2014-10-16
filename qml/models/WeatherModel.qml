@@ -101,6 +101,7 @@ Item {
         XmlRole { name: "period"; query: "@period/string()" }
         XmlRole { name: "symbolcode"; query: "symbol/@var/string()" }
         XmlRole { name: "windType"; query: "windSpeed/@name/string()" }
+        XmlRole { name: "windDirectionName"; query: "windDirection/@name/string()" }
         XmlRole { name: "windDirectionDeg"; query: "windDirection/@deg/string()" }
         XmlRole { name: "windSpeed"; query: "windSpeed/@mps/string()" }
         XmlRole { name: "temperature"; query: "temperature/@value/string()" }

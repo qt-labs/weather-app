@@ -66,6 +66,7 @@ public:
         QString to;
         QString temperature;
         QString windSpeed;
+        QString windDirectionName;
         QString windUrl;
         QString rain;
     };
@@ -76,8 +77,9 @@ public:
         ToRole              = Qt::UserRole + 3,
         TemperatureRole     = Qt::UserRole + 4,
         WindSpeedRole       = Qt::UserRole + 5,
-        WindUrlRole         = Qt::UserRole + 6,
-        RainRole            = Qt::UserRole + 7
+        WindDirectionNameRole = Qt::UserRole + 6,
+        WindUrlRole         = Qt::UserRole + 7,
+        RainRole            = Qt::UserRole + 8
     };
 
     DayModel();
@@ -93,7 +95,7 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     QHash<int, QByteArray> roleNames() const;
 
-    Q_INVOKABLE void addRow(QString weatherUrl, QString from, QString to, QString temperature, QString windSpeed, QString windUrl, QString rain);
+    Q_INVOKABLE void addRow(QString weatherUrl, QString from, QString to, QString temperature, QString windSpeed, QString windDirectionName, QString windUrl, QString rain);
     Q_INVOKABLE QString getDayDetails(int index, QString prop) const;
     Q_INVOKABLE int periodCount() const { return m_data.count(); }
 

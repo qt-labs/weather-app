@@ -176,7 +176,7 @@ GridLayout {
                 text : qsTr("Wind: ") + Utils.getWindSpeed(root.sliderValue, root.model)
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                 pixelSize: 30
-                Accessible.name: text + " " + windUnit.text
+                Accessible.name: text + " " + windUnit.text + " " + Utils.getWindDirectionName(root.sliderValue, root.model)
             }
             TouchLabel {
                 //: The wind speed unit, meters per second or miles per hour
