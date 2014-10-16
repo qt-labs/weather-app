@@ -101,6 +101,12 @@ TextField {
         anchors.top: parent.top
         height: parent.height
         width: parent.height
+        Accessible.role: Accessible.Button
+        Accessible.name: qsTr("Clear")
+        function accessiblePressAction() {
+            textfield.clearButtonClicked()
+        }
+
         Image {
             anchors.centerIn: parent
             source: ApplicationInfo.getImagePath("Clear.png")
