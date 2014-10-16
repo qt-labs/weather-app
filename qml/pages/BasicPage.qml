@@ -213,6 +213,7 @@ Item {
         Keys.onReturnPressed: page.searchBoxReturn()
         Keys.onEnterPressed: page.searchBoxReturn()
         onClearButtonClicked: page.clearSearchBox()
+        Accessible.searchEdit: true
     }
 
     Loader {
