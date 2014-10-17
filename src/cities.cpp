@@ -109,7 +109,7 @@ void Cities::readCities()
     file.close();
 }
 
-int Cities::processSourceXml(const QString sourceXml)
+int Cities::processSourceXml(const QString &sourceXml)
 {
     // Dont add save town/identical sourceXml twice
     for (int i = 0; i <m_cityMap.count(); i++) {

@@ -94,7 +94,7 @@ void DayModel::clear()
     m_data.clear();
 }
 
-void DayModel::addRow(QString weatherUrl, QString from, QString to, QString temperature, QString windSpeed, QString windDirectionName, QString windUrl, QString rain) {
+void DayModel::addRow(const QString &weatherUrl, const QString &from, const QString &to, const QString &temperature, const QString &windSpeed, const QString &windDirectionName, const QString &windUrl, const QString &rain) {
     QStringList m_images;
     DayModelStructure temp;
     temp.from = from;
@@ -113,7 +113,7 @@ void DayModel::addRow(QString weatherUrl, QString from, QString to, QString temp
     emit addedImages(m_images);
 }
 
-QUrl DayModel::getCachedImageFile(const QString url)
+QUrl DayModel::getCachedImageFile(const QString &url)
 {
     bool isLargeImage = url.contains("b200");
     QString baseFilename = url.right(url.length() - url.lastIndexOf("/") - 1);
@@ -135,7 +135,7 @@ QUrl DayModel::getCachedImageFile(const QString url)
     }
 }
 
-QString DayModel::getDayDetails(int index, QString prop) const
+QString DayModel::getDayDetails(int index, const QString &prop) const
 {
     if (index == -1)
         index = 0;

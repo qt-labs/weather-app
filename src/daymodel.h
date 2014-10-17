@@ -85,7 +85,7 @@ public:
     DayModel();
 
     QString getDate() const { return m_date;}
-    void setDate(QString date) { m_date = date; }
+    void setDate(const QString &date) { m_date = date; }
 
     int getAfternoonIndex() const { return m_afternoonindex;}
     void setAfternoonIndex(int index) { m_afternoonindex = index; }
@@ -95,16 +95,16 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     QHash<int, QByteArray> roleNames() const;
 
-    Q_INVOKABLE void addRow(QString weatherUrl, QString from, QString to, QString temperature, QString windSpeed, QString windDirectionName, QString windUrl, QString rain);
-    Q_INVOKABLE QString getDayDetails(int index, QString prop) const;
+    Q_INVOKABLE void addRow(const QString &weatherUrl, const QString &from, const QString &to, const QString &temperature, const QString &windSpeed, const QString &windDirectionName, const QString &windUrl, const QString &rain);
+    Q_INVOKABLE QString getDayDetails(int index, const QString &prop) const;
     Q_INVOKABLE int periodCount() const { return m_data.count(); }
 
-    Q_INVOKABLE QUrl getCachedImageFile(const QString url);
+    Q_INVOKABLE QUrl getCachedImageFile(const QString &url);
 
 Q_SIGNALS:
     void dateChanged();
     void afternoonIndexChanged();
-    void addedImages(const QStringList images);
+    void addedImages(const QStringList &images);
 
 private:
     QString m_date;

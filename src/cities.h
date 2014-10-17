@@ -65,7 +65,7 @@ public:
     Q_INVOKABLE CityModel* getCityModel(const int index);
     Q_INVOKABLE void removeCityModel(const int index);
     int addCityModel(CityModel *model);
-    Q_INVOKABLE int processSourceXml(const QString sourceXml);
+    Q_INVOKABLE int processSourceXml(const QString &sourceXml);
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QHash<int, QByteArray> roleNames() const;
