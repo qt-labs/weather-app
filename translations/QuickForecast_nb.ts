@@ -19,6 +19,10 @@
 <context>
     <name>BasicPage</name>
     <message>
+        <source>Back</source>
+        <translation>Tilbake</translation>
+    </message>
+    <message>
         <source>Find City</source>
         <translation>Søk by</translation>
     </message>
@@ -53,9 +57,25 @@
     </message>
 </context>
 <context>
+    <name>ListViewDelegate</name>
+    <message>
+        <source>Remove %1</source>
+        <translation>Fjern %1</translation>
+    </message>
+</context>
+<context>
     <name>LongTermDayItem</name>
     <message>
+        <source>%1 %2 - temperature low: %3, high: %4, wind: %5 %6</source>
+        <translation>%1 %2 - minimumstemperatur: %3, maksimumstemperatur: %4, vind: %5 %6</translation>
+    </message>
+    <message>
+        <source>press for details</source>
+        <translation>trykk for detaljer</translation>
+    </message>
+    <message>
         <source>m/s</source>
+        <extracomment>The wind speed unit, meters per second or miles per hour</extracomment>
         <translation>m/s</translation>
     </message>
 </context>
@@ -97,6 +117,7 @@
     </message>
     <message>
         <source>mm</source>
+        <extracomment>The rain level unit, millimeters or inches</extracomment>
         <translation>mm</translation>
     </message>
     <message>
@@ -105,7 +126,15 @@
     </message>
     <message>
         <source>m/s</source>
+        <extracomment>The wind speed unit, meters per second or miles per hour</extracomment>
         <translation>m/s</translation>
+    </message>
+</context>
+<context>
+    <name>QGuiApplication</name>
+    <message>
+        <source>Privacy Policy</source>
+        <translation>Retningslinjer for personvern</translation>
     </message>
 </context>
 <context>
