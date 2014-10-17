@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
     // WinRT requires that we install a privacy policy link to the Charms bar when the network is
     // used, so create a Charms menu item and connect a slot to handle it
     WinRTSettingsCharm settingsCharm;
-    settingsCharm.addItem(app.tr("Privacy Policy"));
+    settingsCharm.addItem(QGuiApplication::tr("Privacy Policy"));
     QObject::connect(&settingsCharm, &WinRTSettingsCharm::itemClicked, [](const QString &) {
         QDesktopServices::openUrl(QUrl("http://qt.digia.com/Digia-Legal-Notice--Privacy-Policy/"));
     });
