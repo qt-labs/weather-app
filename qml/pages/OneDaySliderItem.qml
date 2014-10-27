@@ -161,6 +161,13 @@ GridLayout {
                 readonly property int sliderValue: Math.round(touchSlider.value)
                 Accessible.name: qsTr("%1 - %2").arg(Utils.getFromTime(sliderValue, root.model)).arg(Utils.getToTime(sliderValue, root.model))
                 Accessible.description: qsTr("change value to get weather information for part of the day")
+
+                Accessible.onIncreaseAction: {
+                    touchSlider.value += 1
+                }
+                Accessible.onDecreaseAction: {
+                    touchSlider.value -= 1
+                }
             }
             RowLayout {
                 id: rowTime
