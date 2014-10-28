@@ -62,7 +62,7 @@ Rectangle {
         onClicked: rect.clicked()
         Accessible.role: Accessible.Button
         Accessible.name: loader.item.accessibleName
-        function accessiblePressAction() {
+        Accessible.onPressAction: {
             rect.clicked()
         }
     }
@@ -152,7 +152,7 @@ Rectangle {
             onClicked: if (!isSearchView) rect.deleteCity()
             Accessible.name: qsTr("Remove %1").arg(city.text)
             Accessible.role: Accessible.Button
-            function accessiblePressAction () { if (!isSearchView) rect.deleteCity() }
+            Accessible.onPressAction: { if (!isSearchView) rect.deleteCity() }
             Image {
                 id: imageRemove
                 anchors.centerIn: parent

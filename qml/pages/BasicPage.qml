@@ -117,7 +117,7 @@ Item {
                 visible: page.Stack.index > 0
                 Accessible.role: Accessible.Button
                 Accessible.name: qsTr("Back")
-                function accessiblePressAction () { backPressed() }
+                Accessible.onPressAction: { backPressed() }
             }
             Rectangle {
                 opacity: 0

@@ -103,7 +103,7 @@ TextField {
         width: parent.height
         Accessible.role: Accessible.Button
         Accessible.name: qsTr("Clear")
-        function accessiblePressAction() {
+        Accessible.onPressAction: {
             textfield.clearButtonClicked()
         }
 

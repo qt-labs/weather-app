@@ -65,7 +65,7 @@ ObjectModel {
             Accessible.role: Accessible.Button
             Accessible.name: qsTr("%1 %2 - temperature low: %3, high: %4, wind: %5 %6").arg(Utils.getDay(0, dayModel)).arg(Utils.getShortDate(dayModel.date)).arg(lowTemp.text).arg(highTemp.text).arg(windSpeed.text).arg(Utils.expandAbbreviation("m/s"))
             Accessible.description: qsTr("press for details")
-            function accessiblePressAction () {
+            Accessible.onPressAction: {
                 ApplicationInfo.currentIndexDay = index
                 nextPage()
             }
@@ -74,7 +74,7 @@ ObjectModel {
                 id: mouse
                 anchors.fill: parent
                 onClicked: {
-                    parent.accessiblePressAction()
+                    parent.Accessible.pressAction()
                 }
             }
             Rectangle {
