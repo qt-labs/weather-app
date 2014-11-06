@@ -115,9 +115,16 @@ Item {
                 Layout.preferredWidth: 22 * ApplicationInfo.ratio
                 Layout.preferredHeight: 35 * ApplicationInfo.ratio
                 visible: page.Stack.index > 0
-                Accessible.role: Accessible.Button
-                Accessible.name: qsTr("Back")
-                Accessible.onPressAction: { backPressed() }
+                Item {
+                    // This item exist solely for accessibility purposes.
+                    y: -parent.y -parent.parent.y
+                    height: blueRect.height
+                    x: -parent.x
+                    width: t1.x
+                    Accessible.role: Accessible.Button
+                    Accessible.name: qsTr("Back")
+                    Accessible.onPressAction: { backPressed() }
+                }
             }
             Rectangle {
                 opacity: 0
@@ -165,10 +172,11 @@ Item {
                 Layout.preferredWidth: ApplicationInfo.hMargin
                 Item {
                     // This item exist solely for accessibility purposes.
+                    y: -parent.y -parent.parent.y
                     x: -parent.x + t1.x
                     visible: true
                     width: titleRow.width - t1.x
-                    height: parent.height
+                    height: blueRect.height
                     Accessible.role: Accessible.StaticText
                     Accessible.name: title1 + " " + title2 + " " + title3
                 }
